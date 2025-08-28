@@ -9,7 +9,9 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
 
-app.post("/api/send-email-1", async (req, res) => {
+// Corrigido: A rota agora é a raiz do arquivo, já que a Vercel
+// lida com o prefixo 'api' e o nome do arquivo.
+app.post("/", async (req, res) => {
     const { nome, email, pontuacao, nivel, pontosFortes, pontosMelhorar } = req.body;
 
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
