@@ -184,7 +184,9 @@ button:hover {
 }
 
 .proxima-questao-container-large button {
-  max-width: 180px;
+  max-width: 250px;  
+  width: 60%;       
+  padding: 14px 20px;
 }
 
 /* Formulários */
@@ -268,8 +270,9 @@ input[type="email"]:focus {
 
 /* Feedback */
 .feedback-questao {
-  margin-top: 5px;
-  padding: 14px;
+  max-width: 450px; 
+  margin: 10px auto 0;
+  padding: 12px 14px;
   border-radius: 8px;
   text-align: left;
 }
@@ -282,6 +285,12 @@ input[type="email"]:focus {
 .feedback-questao.incorreta {
   background-color: #5e2c2c;
   border: 1px solid #c95151;
+}
+
+.feedback-questao.correta,
+.feedback-questao.incorreta {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Resultado */
