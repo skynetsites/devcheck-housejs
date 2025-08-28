@@ -154,6 +154,40 @@ button:hover {
     font-size: 0.9em;
   }
 
+    /* Feedback */
+  .quiz-large .feedback-questao {
+    max-width: 400px;
+    margin: 10px auto 0;
+  }
+
+  .quiz-large #proxima-questao {
+    max-width: 100px;
+    margin: 20px auto 0;
+  }
+
+  .feedback-large {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 15px;
+    margin-top: 15px;
+  }
+
+  .feedback-large p {
+    font-size: 0.9em;
+  }
+
+  /* Botão "Próxima" */
+  .proxima-questao-container-large {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .proxima-questao-container-large button {
+    max-width: 100px;
+  }
+
 /* Formulários */
 form {
   display: flex;
