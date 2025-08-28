@@ -49,7 +49,7 @@ const perguntasOriginais = [
           "Correto. Laços de repetição executam um bloco de código múltiplas vezes.",
       },
       {
-        texto: "Dividir o código em várias partes.",
+        texto: "Dividir o código em várias partes, para que a função possa entrar nas variáveis.",
         correta: false,
         explicacao: "Incorreto. Para dividir o código, usamos funções.",
       },
@@ -66,7 +66,7 @@ const perguntasOriginais = [
         explicacao: "Incorreto. Os programas e dados são o 'software'.",
       },
       {
-        texto: "A parte lógica e intangível de um computador.",
+        texto: "A parte lógica e intangível de um computador. Funciona de maneira semelhante ao cérebro humano.",
         correta: false,
         explicacao: "Incorreto. A parte lógica é o 'software'.",
       },
@@ -85,7 +85,7 @@ const perguntasOriginais = [
     pergunta: "Qual a principal função do JavaScript em um site?",
     opcoes: [
       {
-        texto: "Dar estilo e aparência aos elementos da página.",
+        texto: "Dar estilo e aparência aos elementos da página e somente isso.",
         correta: false,
         explicacao: "Incorreto. Estilos são aplicados com CSS.",
       },
@@ -111,7 +111,7 @@ const perguntasOriginais = [
     pergunta: "O que é 'recursão' em programação?",
     opcoes: [
       {
-        texto: "Um método para quebrar um loop infinito.",
+        texto: "Um método para quebrar um loop infinito. Exige uma função específica para funcionar.",
         correta: false,
         explicacao:
           "Incorreto. Para quebrar um loop, usamos `break` ou ajustamos a condição.",
@@ -142,7 +142,7 @@ const perguntasOriginais = [
           "Correto. Algoritmos de ordenação (como Bubble Sort) são fundamentais para organizar dados de forma eficiente.",
       },
       {
-        texto: "Um conjunto de regras para somar números.",
+        texto: "Um conjunto de regras para somar números. Não se aplica a ordenação.",
         correta: false,
         explicacao:
           "Incorreto. Um algoritmo de ordenação não é específico para somas, mas para a organização de dados.",
