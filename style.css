@@ -268,7 +268,7 @@ input[type="email"]:focus {
 }
 
 /* Estilos para telas grandes (PC) */
-@media (min-width: 701px) {
+@media screen and (min-width: 701px) {
   .quiz-container {
     max-width: 1000px;
     padding: 50px 70px;
@@ -397,7 +397,7 @@ input[type="email"]:focus {
 }
 
 /* Responsividade */
-@media (max-width: 700px) {
+@media screen and (max-width: 700px) {
   .quiz-container {
     padding: 25px 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
