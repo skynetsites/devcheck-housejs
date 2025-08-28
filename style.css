@@ -168,10 +168,9 @@
   }
 
   .proxima-questao-container-large button {
-    /* Removido o max-width e ajustado a largura para que o botão ocupe o espaço disponível */
     max-width: 100%;
     width: 100%;
-    padding: 14px 20px;
+    padding: 34px 40px;
     font-size: 1.1em;
     font-weight: 600;
     border-radius: 8px;
