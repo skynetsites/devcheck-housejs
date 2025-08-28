@@ -1,3 +1,4 @@
+/* Importando a fonte */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
 /* Reset */
@@ -26,7 +27,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   max-width: 100%;
   width: 100%;
-  padding: 40px 40px;
+  padding: 40px;
   text-align: center;
 }
 
@@ -98,95 +99,6 @@ button {
 button:hover {
   background-color: #015b79;
 }
-
-#cadastro-form button[type="submit"] {
-  max-width: 350px;
-  align-self: center;
-  margin-top: 55px;
-}
-
-  .logo-cadastro-large {
-    max-width: 150px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin-top: -20px;
-  }
-
-  .titulo-cadastro-large {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    margin-top: 15px;
-  }
-
-    /* Estilos para a tela de quiz */
-  .quiz-large .questao {
-    padding: 40px;
-  }
-
-  .quiz-large .questao h3 {
-    font-size: 1.4em;
-    margin-top: 60px;
-  }
-
-  .quiz-large .pergunta-header {
-    margin-bottom: 30px;
-  }
-
-  .quiz-large .questao-nivel,
-  .quiz-large .questao-categoria {
-    font-size: 0.9em;
-    padding: 8px 16px;
-    margin-top: -25px;
-  }
-
-  .quiz-large .opcoes {
-    gap: 8px;
-    margin-top: 50px;
-  }
-
-  .quiz-large .opcoes label {
-    padding: 20px 40px;
-    font-size: 1em;
-  }
-
-  .quiz-large .opcoes label span {
-    font-size: 0.9em;
-  }
-
-    /* Feedback */
-  .quiz-large .feedback-questao {
-    max-width: 500px;
-    margin: 10px auto 0;
-  }
-
-  .quiz-large #proxima-questao {
-    max-width: 100px;
-    margin: 20px auto 0;
-  }
-
-  .feedback-large {
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px 15px;
-    margin-top: 15px;
-  }
-
-  .feedback-large p {
-    font-size: 0.9em;
-  }
-
-  /* Botão "Próxima" */
-  .proxima-questao-container-large {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .proxima-questao-container-large button {
-    max-width: 180px;
-  }
 
 /* Formulários */
 form {
@@ -356,6 +268,133 @@ input[type="email"]:focus {
 #pontuacao-final-homepage {
   text-align: center;
   margin-top: 10px;
+}
+
+/* Estilos para telas grandes (PC) */
+@media screen and (min-width: 701px) {
+  .quiz-container {
+    padding: 50px 70px;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    margin-bottom: 25px;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 20px 40px;
+    font-size: 1.2em;
+  }
+
+  /* Estilos para a tela de cadastro */
+  .cadastro-large {
+    padding: 50px 70px;
+  }
+
+  .logo-cadastro-large {
+    max-width: 150px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: -50px;
+  }
+
+  .titulo-cadastro-large {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+
+  #cadastro-form button[type="submit"] {
+    max-width: 350px;
+    align-self: center;
+    margin-top: 55px;
+  }
+
+  .cadastro-large label {
+    font-size: 1.2em;
+    margin: 12px 0;
+  }
+
+  .cadastro-large input[type="text"],
+  .cadastro-large input[type="email"] {
+    padding: 18px 22px;
+    font-size: 1.2em;
+  }
+
+  /* Estilos para a tela de quiz */
+  .quiz-large .questao {
+    padding: 40px;
+  }
+
+  .quiz-large .questao h3 {
+    font-size: 1.4em;
+    margin-top: 60px;
+  }
+
+  .quiz-large .pergunta-header {
+    margin-bottom: 30px;
+  }
+
+  .quiz-large .questao-nivel,
+  .quiz-large .questao-categoria {
+    font-size: 0.9em;
+    padding: 8px 16px;
+    margin-top: -25px;
+  }
+
+  .quiz-large .opcoes {
+    gap: 8px;
+    margin-top: 50px;
+  }
+
+  .quiz-large .opcoes label {
+    padding: 20px 40px;
+    font-size: 1em;
+  }
+
+  .quiz-large .opcoes label span {
+    font-size: 0.9em;
+  }
+
+  /* Feedback */
+  .quiz-large .feedback-questao {
+    max-width: 500px;
+    margin: 10px auto 0;
+  }
+
+  .quiz-large #proxima-questao {
+    max-width: 100px;
+    margin: 20px auto 0;
+  }
+
+  .feedback-large {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 15px;
+    margin-top: 15px;
+  }
+
+  .feedback-large p {
+    font-size: 0.9em;
+  }
+
+  /* Botão "Próxima" */
+  .proxima-questao-container-large {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .proxima-questao-container-large button {
+    max-width: 180px;
+  }
 }
 
 /* Responsividade */
