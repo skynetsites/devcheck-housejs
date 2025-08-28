@@ -155,8 +155,11 @@ input[type="email"]:focus {
 }
 
 .opcoes label span {
-  position: relative;
-  padding-left: 35px;
+  display: block;
+  font-size: 0.95rem; 
+  line-height: 1.3;
+  padding-left: 36px; 
+  word-break: break-word;
 }
 
 .opcoes label span::before {

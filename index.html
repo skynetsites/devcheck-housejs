@@ -8,63 +8,48 @@
   </head>
   <body>
     <main class="quiz-container">
-           
       <section id="homepage" class="quiz-section active">
-               
         <img src="logo2.png" alt="House JS Logo" class="house-js-logo" />
-               
         <h1>DevCheck - Nível Dev</h1>
-               
         <p>
           Descubra o seu nível de conhecimento em programação com esse quiz
           interativo. Responda a 10 perguntas cuidadosamente selecionadas para
           avaliar suas habilidades em Lógica de Programação, JavaScript e
-          Fundamentos da Computação.        
+          Fundamentos da Computação.
         </p>
-                <button id="iniciar-quiz">Iniciar Quiz</button>      
+        <button id="iniciar-quiz">Iniciar Quiz</button>
       </section>
 
-           
       <section id="cadastro" class="quiz-section">
-               
         <img src="logo2.png" alt="House JS Logo" class="house-js-logo-small" />
-               
         <h2>Preencha seus dados:</h2>
-               
         <form id="cadastro-form">
-                    <label for="nome">Nome Completo:</label>          
+          <label for="nome">Nome Completo:</label>
           <input type="text" id="nome" name="nome" required />
 
-                    <label for="email">E-mail:</label>          
+          <label for="email">E-mail:</label>
           <input type="email" id="email" name="email" required />
 
-                    <button type="submit">Vamos começar!</button>        
+          <button type="submit">Vamos começar!</button>
         </form>
-             
       </section>
 
-           
-      <section id="quiz" class="quiz-section">               
-               
+      <section id="quiz" class="quiz-section">
         <div id="questoes-container"></div>
-               
         <div class="proxima-questao-container">
-                    <button id="proxima-questao">Próxima</button>        
+          <button id="proxima-questao">Próxima</button>
         </div>
-             
       </section>
 
-           
       <section id="resultado" class="quiz-section">
-               
         <img src="logo2.png" alt="House JS Logo" class="house-js-logo-small" />
-               
         <h2>Resultado do seu Teste:</h2>
-               
+
         <div id="nivel-resultado-final"></div>
-               
         <div id="analise-final"></div>
 
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script src="script.js"></script>
       </section>
     </main>
 
