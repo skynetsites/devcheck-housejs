@@ -290,13 +290,13 @@ input[type="email"]:focus {
     font-size: 1.2em;
   }
 
-  /* Tela de cadastro */
+  /* Estilos para a tela de cadastro */
   .cadastro-large {
     padding: 50px 70px;
   }
 
   .logo-cadastro-large {
-    max-width: 200px; 
+    max-width: 200px;
     margin-bottom: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -326,13 +326,13 @@ input[type="email"]:focus {
     font-size: 1.2em;
   }
 
-  /* Tela de quiz */
+  /* Estilos para a tela de quiz */
   .quiz-large .questao {
     padding: 70px;
   }
 
   .quiz-large .questao h3 {
-    font-size: 2em; 
+    font-size: 2em;
     margin-top: 80px;
   }
 
@@ -362,10 +362,9 @@ input[type="email"]:focus {
   }
 
   /* Feedback */
-
   .quiz-large .feedback-questao {
-    max-width: 800px; 
-    margin: 20px auto 0; 
+    max-width: 800px;
+    margin: 20px auto 0;
   }
 
   .quiz-large #proxima-questao {
