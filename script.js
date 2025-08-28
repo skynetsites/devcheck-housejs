@@ -12,12 +12,15 @@ const perguntasOriginais = [
       {
         texto: "Um tipo de erro de programação.",
         correta: false,
-        explicacao: "Incorreto. Erros de programação são problemas que impedem o código de funcionar.",
+        explicacao:
+          "Incorreto. Erros de programação são problemas que impedem o código de funcionar.",
       },
       {
-        texto: "Um espaço nomeado na memória do computador para armazenar dados.",
+        texto:
+          "Um espaço nomeado na memória do computador para armazenar dados.",
         correta: true,
-        explicacao: "Correto. Variáveis guardam valores que podem ser modificados durante o programa.",
+        explicacao:
+          "Correto. Variáveis guardam valores que podem ser modificados durante o programa.",
       },
       {
         texto: "Um comando para dividir o código em várias funções.",
@@ -29,17 +32,21 @@ const perguntasOriginais = [
   {
     categoria: "Lógica de Programação",
     nivel: "Iniciante",
-    pergunta: "Qual é o objetivo de uma estrutura de repetição (laço `for` ou `while`)?",
+    pergunta:
+      "Qual é o objetivo de uma estrutura de repetição (laço `for` ou `while`)?",
     opcoes: [
       {
         texto: "Armazenar dados permanentemente.",
         correta: false,
-        explicacao: "Incorreto. O armazenamento permanente de dados é feito com bancos de dados ou arquivos.",
+        explicacao:
+          "Incorreto. O armazenamento permanente de dados é feito com bancos de dados ou arquivos.",
       },
       {
-        texto: "Executar um bloco de código repetidamente até que uma condição seja satisfeita.",
+        texto:
+          "Executar um bloco de código repetidamente até que uma condição seja satisfeita.",
         correta: true,
-        explicacao: "Correto. Laços de repetição executam um bloco de código múltiplas vezes.",
+        explicacao:
+          "Correto. Laços de repetição executam um bloco de código múltiplas vezes.",
       },
       {
         texto: "Dividir o código em várias partes.",
@@ -64,9 +71,11 @@ const perguntasOriginais = [
         explicacao: "Incorreto. A parte lógica é o 'software'.",
       },
       {
-        texto: "A parte física e tangível de um computador, como teclado, mouse e processador.",
+        texto:
+          "A parte física e tangível de um computador, como teclado, mouse e processador.",
         correta: true,
-        explicacao: "Correto. Hardware se refere a todos os componentes físicos de um computador.",
+        explicacao:
+          "Correto. Hardware se refere a todos os componentes físicos de um computador.",
       },
     ],
   },
@@ -81,9 +90,11 @@ const perguntasOriginais = [
         explicacao: "Incorreto. Estilos são aplicados com CSS.",
       },
       {
-        texto: "Adicionar interatividade, como animações, validações de formulário, etc.",
+        texto:
+          "Adicionar interatividade, como animações, validações de formulário, etc.",
         correta: true,
-        explicacao: "Correto. JavaScript torna as páginas web dinâmicas e interativas.",
+        explicacao:
+          "Correto. JavaScript torna as páginas web dinâmicas e interativas.",
       },
       {
         texto: "Criar a estrutura básica e o conteúdo da página.",
@@ -102,12 +113,14 @@ const perguntasOriginais = [
       {
         texto: "Um método para quebrar um loop infinito.",
         correta: false,
-        explicacao: "Incorreto. Para quebrar um loop, usamos `break` ou ajustamos a condição.",
+        explicacao:
+          "Incorreto. Para quebrar um loop, usamos `break` ou ajustamos a condição.",
       },
       {
         texto: "Uma função que chama a si mesma para resolver um problema.",
         correta: true,
-        explicacao: "Correto. Recursão é quando uma função chama a si mesma até atingir uma condição de parada.",
+        explicacao:
+          "Correto. Recursão é quando uma função chama a si mesma até atingir uma condição de parada.",
       },
       {
         texto: "A repetição de um bloco de código com diferentes variáveis.",
@@ -122,14 +135,17 @@ const perguntasOriginais = [
     pergunta: "O que é 'algoritmo de ordenação'?",
     opcoes: [
       {
-        texto: "Um algoritmo que organiza dados em uma sequência específica, como ordem alfabética ou numérica.",
+        texto:
+          "Um algoritmo que organiza dados em uma sequência específica, como ordem alfabética ou numérica.",
         correta: true,
-        explicacao: "Correto. Algoritmos de ordenação (como Bubble Sort) são fundamentais para organizar dados de forma eficiente.",
+        explicacao:
+          "Correto. Algoritmos de ordenação (como Bubble Sort) são fundamentais para organizar dados de forma eficiente.",
       },
       {
         texto: "Um conjunto de regras para somar números.",
         correta: false,
-        explicacao: "Incorreto. Um algoritmo de ordenação não é específico para somas, mas para a organização de dados.",
+        explicacao:
+          "Incorreto. Um algoritmo de ordenação não é específico para somas, mas para a organização de dados.",
       },
       {
         texto: "Um tipo de erro que impede o código de compilar.",
@@ -151,12 +167,15 @@ const perguntasOriginais = [
       {
         texto: "Um erro que acontece quando a função não encontra um elemento no DOM.",
         correta: false,
-        explicacao: "Incorreto. O erro de não encontrar um elemento no DOM geralmente é um `TypeError`.",
+        explicacao:
+          "Incorreto. O erro de não encontrar um elemento no DOM geralmente é um `TypeError`.",
       },
       {
-        texto: "Objetos que representam a conclusão (sucesso ou falha) de uma operação assíncrona.",
+        texto:
+          "Objetos que representam a conclusão (sucesso ou falha) de uma operação assíncrona.",
         correta: true,
-        explicacao: "Correto. Promises são essenciais para lidar com operações assíncronas de forma mais limpa.",
+        explicacao:
+          "Correto. Promises são essenciais para lidar com operações assíncronas de forma mais limpa.",
       },
     ],
   },
@@ -165,22 +184,27 @@ const perguntasOriginais = [
   {
     categoria: "Lógica de Programação",
     nivel: "Expert",
-    pergunta: "O que é 'complexidade de tempo' em um algoritmo e por que ela é importante?",
+    pergunta:
+      "O que é 'complexidade de tempo' em um algoritmo e por que ela é importante?",
     opcoes: [
       {
         texto: "É o tempo exato que um algoritmo leva para ser executado.",
         correta: false,
-        explicacao: "Incorreto. A complexidade de tempo não mede o tempo exato, mas a taxa de crescimento dele.",
+        explicacao:
+          "Incorreto. A complexidade de tempo não mede o tempo exato, mas a taxa de crescimento dele.",
       },
       {
         texto: "Mede o quanto de memória um algoritmo consome durante a execução.",
         correta: false,
-        explicacao: "Incorreto. O consumo de memória é a 'complexidade de espaço'.",
+        explicacao:
+          "Incorreto. O consumo de memória é a 'complexidade de espaço'.",
       },
       {
-        texto: "Mede a taxa de crescimento do tempo de execução em função do tamanho da entrada, essencial para prever seu desempenho.",
+        texto:
+          "Mede a taxa de crescimento do tempo de execução em função do tamanho da entrada, essencial para prever seu desempenho.",
         correta: true,
-        explicacao: "Correto. A complexidade de tempo, expressa em notação Big O, é um conceito fundamental para otimizar a eficiência de um algoritmo.",
+        explicacao:
+          "Correto. A complexidade de tempo, expressa em notação Big O, é um conceito fundamental para otimizar a eficiência de um algoritmo.",
       },
     ],
   },
@@ -192,17 +216,21 @@ const perguntasOriginais = [
       {
         texto: "Um tipo de linguagem de programação.",
         correta: false,
-        explicacao: "Incorreto. Linguagens de programação são usadas para criar software.",
+        explicacao:
+          "Incorreto. Linguagens de programação são usadas para criar software.",
       },
       {
         texto: "É um modelo de banco de dados para sistemas distribuídos.",
         correta: false,
-        explicacao: "Incorreto. O modelo OSI não se refere a bancos de dados, mas a como os sistemas de comunicação interagem.",
+        explicacao:
+          "Incorreto. O modelo OSI não se refere a bancos de dados, mas a como os sistemas de comunicação interagem.",
       },
       {
-        texto: "Um modelo de referência para o funcionamento de redes, dividido em sete camadas para padronizar a comunicação entre diferentes sistemas.",
+        texto:
+          "Um modelo de referência para o funcionamento de redes, dividido em sete camadas para padronizar a comunicação entre diferentes sistemas.",
         correta: true,
-        explicacao: "Correto. O modelo OSI ajuda a entender como os dados se movem em uma rede.",
+        explicacao:
+          "Correto. O modelo OSI ajuda a entender como os dados se movem em uma rede.",
       },
     ],
   },
@@ -212,19 +240,24 @@ const perguntasOriginais = [
     pergunta: "O que é 'closure' em JavaScript?",
     opcoes: [
       {
-        texto: "Um erro que acontece quando você tenta acessar uma variável que não existe.",
+        texto:
+          "Um erro que acontece quando você tenta acessar uma variável que não existe.",
         correta: false,
-        explicacao: "Incorreto. Acessar uma variável não existente geralmente resulta em um `ReferenceError`.",
+        explicacao:
+          "Incorreto. Acessar uma variável não existente geralmente resulta em um `ReferenceError`.",
       },
       {
         texto: "Um tipo de objeto que armazena pares de chave-valor.",
         correta: false,
-        explicacao: "Incorreto. Objetos que armazenam pares de chave-valor são `Objects` ou `Maps`.",
+        explicacao:
+          "Incorreto. Objetos que armazenam pares de chave-valor são `Objects` ou `Maps`.",
       },
       {
-        texto: "A capacidade de uma função interna de 'lembrar' e acessar variáveis de seu escopo externo (léxico).",
+        texto:
+          "A capacidade de uma função interna de 'lembrar' e acessar variáveis de seu escopo externo (léxico).",
         correta: true,
-        explicacao: "Correto. Closures permitem a criação de funções com estado e dados privados, um conceito avançado e poderoso.",
+        explicacao:
+          "Correto. Closures permitem a criação de funções com estado e dados privados, um conceito avançado e poderoso.",
       },
     ],
   },
@@ -236,7 +269,13 @@ const cadastroSection = document.getElementById("cadastro");
 const cadastroForm = document.getElementById("cadastro-form");
 const quizSection = document.getElementById("quiz");
 const questoesContainer = document.getElementById("questoes-container");
-const proximaQuestaoBtn = document.getElementById("proxima-questao");
+
+const proximaQuestaoBtn = document.createElement("button");
+proximaQuestaoBtn.id = "proxima-questao";
+proximaQuestaoBtn.textContent = "Próxima";
+proximaQuestaoBtn.style.display = "none";
+quizSection.appendChild(proximaQuestaoBtn);
+
 const resultadoSection = document.getElementById("resultado");
 const nivelResultadoFinal = document.getElementById("nivel-resultado-final");
 const analiseFinal = document.getElementById("analise-final");
@@ -246,7 +285,6 @@ let voltarHomepageBtn;
 let enviarResultadoBtn;
 let refazerTesteBtn;
 
-// Estado
 let perguntas = [];
 let pontuacao = 0;
 let indiceQuestaoAtual = 0;
@@ -288,7 +326,6 @@ function prepararPerguntas() {
   ];
 }
 
-// Mostrar seção
 function mostrarSeccao(seccao) {
   document
     .querySelectorAll(".quiz-section")
@@ -296,7 +333,6 @@ function mostrarSeccao(seccao) {
   document.getElementById(seccao).classList.add("active");
 }
 
-// Lógica inicial
 if (quizConcluido && resultadoQuiz) {
   const totalPerguntas =
     (resultadoQuiz.respostas && resultadoQuiz.respostas.length) ||
@@ -321,7 +357,6 @@ if (quizConcluido && resultadoQuiz) {
   mostrarSeccao("homepage");
 }
 
-// Ir da homepage para o cadastro
 iniciarQuizBtn.addEventListener("click", () => {
   mostrarSeccao("cadastro");
 });
@@ -335,7 +370,6 @@ cadastroForm.addEventListener("submit", (e) => {
   exibirQuestao();
 });
 
-// Exibir questão
 function exibirQuestao() {
   const questao = perguntas[indiceQuestaoAtual];
   const opcoesEmbaralhadas = embaralharArray([...questao.opcoes]);
@@ -361,7 +395,7 @@ function exibirQuestao() {
     </div>
   </div>
   <div id="feedback-questao"></div>
-`;
+  `;
 
   document.querySelectorAll('input[name="opcao"]').forEach((input) => {
     input.addEventListener(
@@ -406,6 +440,13 @@ function handleResposta(inputSelecionado) {
   const labelSelecionada = inputSelecionado.parentElement;
   labelSelecionada.classList.add(respostaCorreta ? "correta" : "incorreta");
 
+  if (!respostaCorreta) {
+    const opcaoCorretaLabel = document.querySelector(
+      `input[data-correta="true"]`
+    ).parentElement;
+    opcaoCorretaLabel.classList.add("correta");
+  }
+
   document.querySelectorAll('input[name="opcao"]').forEach((input) => {
     input.disabled = true;
   });
@@ -432,7 +473,6 @@ proximaQuestaoBtn.addEventListener("click", () => {
 // Resultado
 function exibirResultado(resultadoData) {
   mostrarSeccao("resultado");
-  
 
   let nivel = "";
   let feedbackNivel = "";
@@ -502,23 +542,24 @@ function exibirResultado(resultadoData) {
       }</p>
       <p><strong>O que você pode fazer:</strong> ${
         pontosMelhorar.length > 0
-          ? `Reforce seus estudos em: <strong>${pontosMelhorar.join(
-              ", "
-            )}</strong>.`
+          ? `Reforce seus estudos em: <strong>${pontosMelhorar.join(", ")}</strong>.`
           : "Continue praticando e explorando novos conceitos para manter seu conhecimento atualizado."
       }</p>
     </div>
     <div class="botoes-resultado">
-      <button id="enviar-resultado-btn">Enviar Resultado por email</button>
+      <button id="enviar-resultado-btn">Enviar Resultado Para o Seu Email</button>
       <button id="refazer-teste-btn">Refazer Teste</button>
     </div>
   `;
 
-  // Botões
   enviarResultadoBtn = document.getElementById("enviar-resultado-btn");
   enviarResultadoBtn.addEventListener("click", () => {
-    enviarResultadoParaPlanilha({ ...resultadoData, nivel });
-    enviarResultadoPorEmail({ ...resultadoData, nivel });
+    enviarResultadoPorEmail({
+      pontuacao: resultadoData.pontuacao,
+      nivel,
+      pontosFortes,
+      pontosMelhorar
+    });
     enviarResultadoBtn.disabled = true;
     enviarResultadoBtn.textContent = "Enviado!";
   });
@@ -557,32 +598,39 @@ function enviarResultadoParaPlanilha(resultadoData) {
     mode: "no-cors",
   })
     .then(() => console.log("Dados da planilha enviados com sucesso!"))
-    .catch((error) => console.error("Erro ao enviar dados para a planilha:", error));
+    .catch((error) =>
+      console.error("Erro ao enviar dados para a planilha:", error)
+    );
 }
 
 // Função que envia os dados para o servidor.
-async function enviarResultadoPorEmail(resultadoData) {
-  const resultadoDiv = document.querySelector(".feedback-final-card").outerHTML;
-
-  await fetch("http://localhost:3000/send-email", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      nome: nomeUsuario,
-      email: emailUsuario, 
-      resultadoHtml: resultadoDiv,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.ok) {
-        alert("Resultado enviado com sucesso para o seu e-mail!");
-      } else {
-        alert("Erro ao enviar resultado por e-mail. Tente novamente mais tarde.");
-      }
-    })
-    .catch((err) => {
-      console.error("Erro de rede:", err);
-      alert("Não foi possível conectar ao servidor de e-mail. Verifique se o servidor está rodando.");
-    });
+async function enviarResultadoPorEmail(dados) {
+  await fetch("http://localhost:3000/send-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nome: nomeUsuario,
+      email: emailUsuario,
+      pontuacao: dados.pontuacao,
+      nivel: dados.nivel,
+      pontosFortes: dados.pontosFortes,
+      pontosMelhorar: dados.pontosMelhorar
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.ok) {
+        alert("Resultado enviado com sucesso para o seu e-mail!");
+      } else {
+        alert(
+          "Erro ao enviar resultado por e-mail. Tente novamente mais tarde."
+        );
+      }
+    })
+    .catch((err) => {
+      console.error("Erro de rede:", err);
+      alert(
+        "Não foi possível conectar ao servidor de e-mail. Verifique se o servidor está rodando."
+      );
+    });
 }

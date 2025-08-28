@@ -31,10 +31,10 @@ body {
 
 /* Logo */
 .house-js-logo {
-max-width: 400px;
-margin-bottom: 50px;
-border-radius: 15px;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .house-js-logo-small {
@@ -161,28 +161,25 @@ input[type="email"]:focus {
 
 .opcoes label span {
   display: block;
-  font-size: 0.95rem; 
+  font-size: 0.95rem;
   line-height: 1.3;
-  padding-left: 36px; 
   word-break: break-word;
+  padding-left: 0;
 }
 
-.opcoes label span::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  border: 2px solid #555555;
-  border-radius: 50%;
-  background-color: #3a3a3a;
+.opcoes label.correta {
+  background-color: #273f2f;
+  border-color: #41965c;
 }
 
-.opcoes input[type="radio"]:checked + span::before {
-  background-color: #f0f2f3;
-  border-color: #585858;
+.opcoes label.incorreta {
+  background-color: #5e2c2c;
+  border-color: #c95151;
+}
+
+.opcoes label.correta:not(.incorreta) {
+  background-color: #273f2f;
+  border-color: #41965c;
 }
 
 /* Feedback */
@@ -255,8 +252,151 @@ input[type="email"]:focus {
   letter-spacing: 1px;
 }
 
-/* Responsividade */
+#homepage {
+  text-align: center;
+}
 
+#nivel-resultado-homepage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.5em;
+}
+
+#pontuacao-final-homepage {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Estilos para telas grandes (PC) */
+@media (min-width: 701px) {
+  .quiz-container {
+    max-width: 1200px;
+    padding: 50px 70px;
+  }
+
+  h1 {
+    font-size: 3.2em;
+    margin-bottom: 25px;
+  }
+
+  p {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 20px 40px;
+    font-size: 1.3em;
+  }
+
+  /* Estilos para a tela de cadastro */
+  .cadastro-large {
+    padding: 50px 70px;
+  }
+
+  .logo-cadastro-large {
+    max-width: 300px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: -50px;
+  }
+
+  .titulo-cadastro-large {
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+
+  #cadastro-form button[type="submit"] {
+    max-width: 350px;
+    align-self: center;
+    margin-top: 55px;
+  }
+
+  .cadastro-large label {
+    font-size: 1.3em;
+    margin: 12px 0;
+  }
+
+  .cadastro-large input[type="text"],
+  .cadastro-large input[type="email"] {
+    padding: 18px 22px;
+    font-size: 1.2em;
+  }
+
+  /* Estilos para a tela de quiz */
+  .quiz-large .questao {
+    padding: 70px 70px;
+  }
+
+  .quiz-large .questao h3 {
+    font-size: 2.5em;
+    margin-top: 80px;
+  }
+
+  .quiz-large .pergunta-header {
+    margin-bottom: 50px;
+  }
+
+  .quiz-large .questao-nivel,
+  .quiz-large .questao-categoria {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin-top: -45px;
+  }
+
+  .quiz-large .opcoes {
+    gap: 12px;
+    margin-top: 80px;
+  }
+
+  .quiz-large .opcoes label {
+    padding: 25px 50px;
+    font-size: 1.2em;
+  }
+
+  .quiz-large .opcoes label span {
+    font-size: 1.1em;
+  }
+
+  /* Feedback */
+
+  .quiz-large .feedback-questao {
+    max-width: 800px; 
+    margin: 20px auto 0; 
+  }
+
+  .quiz-large #proxima-questao {
+    max-width: 250px;
+    margin: 40px auto 0;
+  }
+
+  .feedback-large {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 30px;
+    margin-top: 30px;
+  }
+
+  .feedback-large p {
+    font-size: 1.1em;
+  }
+
+  /* Botão "Próxima" */
+  .proxima-questao-container-large {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .proxima-questao-container-large button {
+    max-width: 250px;
+  }
+}
+
+/* Responsividade */
 @media (max-width: 700px) {
   .quiz-container {
     padding: 25px 20px;
@@ -273,14 +413,10 @@ input[type="email"]:focus {
   .house-js-logo {
     max-width: 300px;
     margin-bottom: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   .house-js-logo-small {
     max-width: 150px;
     margin-bottom: 45px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   h1 {
     font-size: 2em;
