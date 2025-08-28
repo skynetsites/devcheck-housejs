@@ -605,7 +605,7 @@ function enviarResultadoParaPlanilha(resultadoData) {
 
 // Função que envia os dados para o servidor.
 async function enviarResultadoPorEmail(dados) {
-  await fetch("http://localhost:3000/send-email", {
+  await fetch("https://devcheck-housejs.vercel.app/api/send-email", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
