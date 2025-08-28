@@ -121,37 +121,37 @@ button:hover {
 
     /* Estilos para a tela de quiz */
   .quiz-large .questao {
-    padding: 70px;
+    padding: 40px;
   }
 
   .quiz-large .questao h3 {
-    font-size: 2em;
-    margin-top: 80px;
+    font-size: 1.4em;
+    margin-top: 60px;
   }
 
   .quiz-large .pergunta-header {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   .quiz-large .questao-nivel,
   .quiz-large .questao-categoria {
-    font-size: 1em;
-    padding: 10px 20px;
-    margin-top: -45px;
+    font-size: 0.9em;
+    padding: 8px 16px;
+    margin-top: -25px;
   }
 
   .quiz-large .opcoes {
-    gap: 12px;
-    margin-top: 80px;
+    gap: 8px;
+    margin-top: 50px;
   }
 
   .quiz-large .opcoes label {
-    padding: 25px 50px;
-    font-size: 1.2em;
+    padding: 20px 40px;
+    font-size: 1em;
   }
 
   .quiz-large .opcoes label span {
-    font-size: 1.1em;
+    font-size: 0.9em;
   }
 
 /* Formulários */
