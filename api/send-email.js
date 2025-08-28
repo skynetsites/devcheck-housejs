@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Gerar feedback por nível
+    // Feedback por nível
     let feedbackNivel = "";
     if (pontuacao <= 4) {
       feedbackNivel =
@@ -33,7 +33,6 @@ export default async function handler(req, res) {
         "Excelente! Você demonstrou um conhecimento sólido...";
     }
 
-    // Montar blocos de feedback
     const htmlPontosFortes =
       pontosFortes && pontosFortes.length > 0
         ? `<p style="font-size: 16px; color: #666666; margin-top: 10px;">
@@ -53,7 +52,6 @@ export default async function handler(req, res) {
              Continue praticando e explorando novos conceitos para manter seu conhecimento atualizado.
            </p>`;
 
-    // Resultado HTML final
     const resultadoHtml = `
       <p style="font-size: 16px; color: #666666;">
         <strong>Pontuação:</strong> Você acertou ${pontuacao} de 10 perguntas.
@@ -66,16 +64,13 @@ export default async function handler(req, res) {
       ${htmlPontosMelhorar}
     `;
 
-    // Carregar template base
     const templatePath = path.join(process.cwd(), "backend", "template-email.html");
     let emailTemplate = fs.readFileSync(templatePath, "utf8");
 
-    // Substituir variáveis no template
     emailTemplate = emailTemplate
       .replace("{{nome}}", nome)
       .replace("{{conteudo_do_resultado}}", resultadoHtml);
 
-    // Configurar transporte do e-mail
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
