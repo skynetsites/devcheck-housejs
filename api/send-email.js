@@ -12,7 +12,6 @@ app.use(bodyParser.json({ limit: "10mb" }));
 // A rota deve ser a raiz do arquivo, pois a Vercel já
 // define o caminho completo como /api/send-email
 app.post("/", async (req, res) => {
-    // Adicionado: logs de depuração para verificar as variáveis de ambiente
     console.log("Variável de ambiente EMAIL_USER:", process.env.EMAIL_USER ? "Configurada" : "NÃO CONFIGURADA");
     console.log("Variável de ambiente EMAIL_PASS:", process.env.EMAIL_PASS ? "Configurada" : "NÃO CONFIGURADA");
 
@@ -49,12 +48,16 @@ app.post("/", async (req, res) => {
             ${htmlPontosMelhorar}
         `;
 
-        // O caminho para o template de e-mail.
-        // Usa o diretório de trabalho atual para encontrar o template.
-        // Assumindo que o arquivo template-email.html está em 'backend'.
+        // Carregar template HTML
         const templatePath = path.join(process.cwd(), 'backend', 'template-email.html');
         let emailTemplate = fs.readFileSync(templatePath, 'utf8');
 
+        // Substituir variáveis no template
+        emailTemplate = emailTemplate
+            .replace("{{nome}}", nome)
+            .replace("{{conteudo_do_resultado}}", resultadoHtml);
+
+        // Configurar transporte de email
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
