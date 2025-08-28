@@ -36,7 +36,7 @@ Este projeto foi construído com as seguintes tecnologias:
 
 #### Para a Versão Online (sem instalação):
 
-1.  Acesse o quiz diretamente pelo link: `LINK AQUI`
+1.  Acesse o quiz diretamente pelo link: `https://devcheck-housejs.vercel.app/`
 2.  Siga as instruções para iniciar o teste e receber seu resultado.
 
 ---

@@ -270,23 +270,23 @@ input[type="email"]:focus {
 /* Estilos para telas grandes (PC) */
 @media (min-width: 701px) {
   .quiz-container {
-    max-width: 1200px;
+    max-width: 1000px;
     padding: 50px 70px;
   }
 
   h1 {
-    font-size: 3.2em;
+    font-size: 3em;
     margin-bottom: 25px;
   }
 
   p {
-    font-size: 1.4em;
+    font-size: 1.2em;
     margin-bottom: 20px;
   }
 
   button {
     padding: 20px 40px;
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 
   /* Estilos para a tela de cadastro */
@@ -303,7 +303,7 @@ input[type="email"]:focus {
   }
 
   .titulo-cadastro-large {
-    font-size: 2.5em;
+    font-size: 2em;
     margin-bottom: 25px;
     margin-top: 25px;
   }
@@ -315,7 +315,7 @@ input[type="email"]:focus {
   }
 
   .cadastro-large label {
-    font-size: 1.3em;
+    font-size: 1.2em;
     margin: 12px 0;
   }
 
@@ -331,7 +331,7 @@ input[type="email"]:focus {
   }
 
   .quiz-large .questao h3 {
-    font-size: 2.5em;
+    font-size: 2.3em;
     margin-top: 80px;
   }
 
