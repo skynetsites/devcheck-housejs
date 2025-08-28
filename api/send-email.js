@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
 
+// A rota deve ser a raiz do arquivo, pois a Vercel já
+// define o caminho completo como /api/send-email
 app.post("/", async (req, res) => {
     const { nome, email, pontuacao, nivel, pontosFortes, pontosMelhorar } = req.body;
 
@@ -43,7 +45,10 @@ app.post("/", async (req, res) => {
             ${htmlPontosMelhorar}
         `;
 
-        const templatePath = path.join(__dirname, 'template-email.html');
+        // CORRIGIDO: O caminho para o template de e-mail.
+        // Usa o diretório de trabalho atual para encontrar o template.
+        // Assumindo que o arquivo template-email.html está em 'backend'.
+        const templatePath = path.join(process.cwd(), 'backend', 'template-email.html');
         let emailTemplate = fs.readFileSync(templatePath, 'utf8');
 
         emailTemplate = emailTemplate.replace('{{nome}}', nome);
