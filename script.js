@@ -550,16 +550,23 @@ function exibirResultado(resultadoData) {
   `;
 
   enviarResultadoBtn = document.getElementById("enviar-resultado-btn");
-  enviarResultadoBtn.addEventListener("click", () => {
-    enviarResultadoPorEmail({
-      pontuacao: resultadoData.pontuacao,
-      nivel,
-      pontosFortes,
-      pontosMelhorar
-    });
-    enviarResultadoBtn.disabled = true;
-    enviarResultadoBtn.textContent = "Enviado!";
-  });
+enviarResultadoBtn.addEventListener("click", () => {
+  const resultadoParaEnviar = {
+    pontuacao: resultadoData.pontuacao,
+    nivel,
+    pontosFortes,
+    pontosMelhorar
+  };
+
+  // envia e-mail
+  enviarResultadoPorEmail(resultadoParaEnviar);
+
+  // envia para a planilha (Google Forms)
+  enviarResultadoParaPlanilha(resultadoParaEnviar);
+
+  enviarResultadoBtn.disabled = true;
+  enviarResultadoBtn.textContent = "Enviado!";
+});
 
   refazerTesteBtn = document.getElementById("refazer-teste-btn");
   refazerTesteBtn.addEventListener("click", () => {
