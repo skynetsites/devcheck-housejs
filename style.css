@@ -68,7 +68,7 @@
   }
 
   button {
-    background-color: #02688a;
+    background-color: #02688ae7;
     color: #ffffff;
     border: none;
     padding: 16px 32px;
@@ -448,7 +448,7 @@
       text-align: center;
     }
     #nivel-resultado-final h3 {
-      color: #049ed1;
+      color: #026586e7;
       margin-bottom: 10px;
       font-size: 1.5em;
       text-align: center;
