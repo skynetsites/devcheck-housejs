@@ -380,13 +380,13 @@ input[type="email"]:focus {
   }
 
   .house-js-logo {
-    max-width: 180px;
-    margin-bottom: 25px;
+    max-width: 250px;
+    margin-bottom: 10px;
   }
 
   .house-js-logo-small {
-    max-width: 100px;
-    margin-bottom: 15px;
+    max-width: 200px;
+    margin-bottom: 30px;
   }
 
   .logo-cadastro-large {
@@ -395,7 +395,7 @@ input[type="email"]:focus {
   }
 
   h1 {
-    font-size: 1.6em;
+    font-size: 1.8em;
   }
 
   h2 {
@@ -403,7 +403,7 @@ input[type="email"]:focus {
   }
 
   h3 {
-    font-size: 1.2em;
+    font-size: 1.4em;
   }
 
   p {
@@ -474,8 +474,8 @@ input[type="email"]:focus {
 
   .questao-nivel,
   .questao-categoria {
-    font-size: 0.7em;
-    padding: 6px 12px;
+    font-size: 0.5em;
+    padding: 4px 10px;
     width: 100%;
     text-align: center;
   }
@@ -488,7 +488,7 @@ input[type="email"]:focus {
   }
 
   #nivel-resultado-final h3 {
-    color: #038ab8e7;
+    color: #0397c9e7;
     margin-bottom: 10px;
     font-size: 1.5em;
     text-align: center;
