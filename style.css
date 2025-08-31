@@ -139,18 +139,18 @@
 
   /* Feedback */
   .quiz-large .feedback-questao {
-  width: 100%; 
-  max-width: 100%;
-  margin: 10px auto 0;
-  padding: 16px 20px;
-  box-sizing: border-box;
-}
+    width: 100%;
+    max-width: 100%;
+    margin: 10px auto 0;
+    padding: 16px 20px;
+    box-sizing: border-box;
+  }
 
   .quiz-large #proxima-questao {
-  width: 100%;
-  max-width: 350px; 
-  margin: 20px auto 0;
-}
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto 0;
+  }
 
   .feedback-large {
     max-width: 400px;
@@ -172,11 +172,11 @@
   }
 
   .proxima-questao-container-large button {
-  width: 100%; 
-  max-width: 350px;
-  padding: 16px 32px;
-  font-size: 1.1em;
-}
+    width: 100%;
+    max-width: 350px;
+    padding: 16px 32px;
+    font-size: 1.1em;
+  }
 
   /* Formulários */
   form {
@@ -249,17 +249,16 @@
 
   .opcoes label.correta {
     background-color: #273f2f;
-    border-color: #41965c;
+    border-color: #3a8652f5;
   }
 
   .opcoes label.incorreta {
     background-color: #5e2c2c;
-    border-color: #c95151;
+    border-color: #ad4646ec;
   }
 
   /* Feedback */
   .feedback-questao {
-    /* Removido o max-width para que o feedback ocupe 100% do contêiner */
     margin: 10px auto 0;
     padding: 12px 14px;
     border-radius: 8px;
@@ -293,7 +292,7 @@
   }
 
   #nivel-resultado-final h3 {
-    color: #049ed1;
+    color: #047fa8ec;
     margin-bottom: 10px;
   }
 
@@ -374,8 +373,8 @@
       margin-bottom: 10px;
     }
     .house-js-logo-small {
-      max-width: 120px;
-      margin-bottom: 20px;
+      max-width: 160px;
+      margin-bottom: 30px;
     }
     h1 {
       font-size: 1.8em;
@@ -419,6 +418,8 @@
 
     /* Opções */
     .opcoes {
+      width: 100%;
+      box-sizing: border-box;
       gap: 6px;
     }
 
