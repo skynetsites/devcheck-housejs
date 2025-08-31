@@ -391,7 +391,8 @@ input[type="email"]:focus {
 
   .logo-cadastro-large {
     max-width: 200px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 0;  
   }
 
   h1 {
@@ -466,18 +467,19 @@ input[type="email"]:focus {
     font-size: 0.95em;
   }
 
-  .pergunta-header {
+   .pergunta-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px; 
   }
 
   .questao-nivel,
   .questao-categoria {
-    font-size: 0.5em;
-    padding: 4px 10px;
-    width: 100%;
-    text-align: center;
+    font-size: 0.85em;
+    padding: 6px 12px;
+    margin: 0; 
+    width: 100%; 
+    text-align: center; 
   }
 
   /* Resultado */
