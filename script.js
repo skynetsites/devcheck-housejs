@@ -1,4 +1,4 @@
-const FORM_ID = "1FAIpQLSdGlPosYvYxYGk5IC9EV_gxQhTgjz9rXRqN5V9mMhPShU4-JA";
+const FORM_ID = "1FAIpQLSdlahHWiLMMTDBC5PP0mUwU3RTzcUHarPfbeR5AVdGrahcIig";
 const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
 
 // Perguntas do quiz
@@ -587,17 +587,19 @@ function exibirResultado(resultadoData) {
 // Função que envia o resultado pro Google Forms
 function enviarResultadoParaPlanilha(resultadoData) {
   const params = new URLSearchParams();
-  params.append("entry.1195497629", nomeUsuario);
-  params.append("entry.1799645421", emailUsuario);
-  params.append("entry.770493011", resultadoData.pontuacao);
-  params.append("entry.1267423731", resultadoData.nivel);
+  params.append("entry.697814456", nomeUsuario);
+  params.append("entry.1742734606", emailUsuario);
+  params.append("entry.82915780", resultadoData.pontuacao);
+  params.append("entry.302556256", resultadoData.nivel);
+  params.append("entry.988138350", resultadoData.pontosFortes);
+  params.append("entry.648974086", resultadoData.pontosMelhorar);
 
   fetch(FORM_URL, {
     method: "POST",
     body: params,
     mode: "no-cors",
   })
-    .then(() => console.log("Dados da planilha enviados com sucesso!"))
+    .then(() => console.log("Dados enviados com sucesso para a planilha!"))
     .catch((error) =>
       console.error("Erro ao enviar dados para a planilha:", error)
     );
