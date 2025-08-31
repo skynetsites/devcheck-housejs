@@ -468,21 +468,25 @@ input[type="email"]:focus {
   }
 
    .pergunta-header {
-    flex-direction: row;  
-    justify-content: center;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
     align-items: center;
-    gap: 10px; 
-    flex-wrap: wrap;
+    gap: 12px; 
+    margin-bottom: 15px;
   }
 
   .questao-nivel,
   .questao-categoria {
-    font-size: 0.85em;
+    font-size: 0.8em;
     padding: 6px 12px;
-    margin: 0;
-    flex-shrink: 0; 
+    margin: 0; 
+    background-color: #4a4a4a;
+    border-radius: 6px;
+    flex: 0 0 auto; 
+    white-space: nowrap;
   }
-
+  
   /* Resultado */
   .resultado-card {
     padding: 20px;
