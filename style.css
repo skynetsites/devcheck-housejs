@@ -357,7 +357,7 @@
       padding: 10px;
     }
     .quiz-container {
-      padding: 25px 0;
+      padding: 25px 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       max-width: 100%;
       width: 100%;
@@ -418,25 +418,15 @@
 
     /* Opções */
     .opcoes {
-      margin: 0 20px;
-      width: auto;
-      box-sizing: border-box;
-      gap: 6px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
     .opcoes label {
       padding: 10px 14px;
       font-size: 1em;
-    }
-
-    /* Feedback */
-    .feedback-questao {
-      margin: 10px 20px 0;
-      padding: 12px 14px;
-      border-radius: 8px;
-      text-align: left;
-      width: auto;
-      box-sizing: border-box;
+      width: 100%;
     }
 
     /* Botão */
