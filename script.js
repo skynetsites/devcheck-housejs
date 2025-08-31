@@ -1,6 +1,6 @@
 const FORM_ID = "1FAIpQLSdGlPosYvYxYGk5IC9EV_gxQhTgjz9rXRqN5V9mMhPShU4-JA";
 const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-import Swal from "sweetalert2";
+
 // Perguntas do quiz
 const perguntasOriginais = [
   // --- PERGUNTAS NÍVEL INICIANTE (4) ---
@@ -603,6 +603,7 @@ function enviarResultadoParaPlanilha(resultadoData) {
     );
 }
 
+// Função que envia os dados para o servidor.
 async function enviarResultadoPorEmail(dados) {
   await fetch("https://devcheck-housejs.vercel.app/api/send-email", {
     method: "POST",
@@ -624,7 +625,7 @@ async function enviarResultadoPorEmail(dados) {
           title: "Sucesso!",
           text: "Resultado enviado com sucesso para o seu e-mail!",
           confirmButtonText: "OK",
-          confirmButtonColor: "#417742ff"
+          confirmButtonColor: "#1c5c1eef"
         });
       } else {
         Swal.fire({
@@ -632,7 +633,7 @@ async function enviarResultadoPorEmail(dados) {
           title: "Erro!",
           text: "Erro ao enviar resultado por e-mail. Tente novamente mais tarde.",
           confirmButtonText: "Fechar",
-          confirmButtonColor: "rgba(165, 36, 36, 1)"
+          confirmButtonColor: "rgba(122, 35, 35, 0.94)"
         });
       }
     })
