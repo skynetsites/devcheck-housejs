@@ -385,7 +385,7 @@ input[type="email"]:focus {
   }
 
   .house-js-logo-small {
-    max-width: 120px;
+    max-width: 100px;
     margin-bottom: 15px;
   }
 
@@ -466,19 +466,6 @@ input[type="email"]:focus {
     font-size: 0.95em;
   }
 
-  .resultado-card {
-    padding: 20px;
-  }
-
-  .botoes-resultado {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .botoes-resultado button {
-    max-width: 100%;
-  }
-
   .pergunta-header {
     flex-direction: column;
     align-items: flex-start;
@@ -487,16 +474,42 @@ input[type="email"]:focus {
 
   .questao-nivel,
   .questao-categoria {
-    font-size: 0.75em;
+    font-size: 0.7em;
     padding: 6px 12px;
+    width: 100%;
+    text-align: center;
   }
 
-  #nivel-resultado-homepage {
-    font-size: 1.2em;
+  /* Resultado */
+  .resultado-card {
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
   }
 
-  #pontuacao-final-homepage {
-    font-size: 1em;
+  #nivel-resultado-final h3 {
+    color: #038ab8e7;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  #analise-final p {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .botoes-resultado {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .botoes-resultado button {
+    max-width: 100%;
+    font-size: 1.1em;
+    padding: 14px 20px;
+    text-align: center;
   }
 }
 
