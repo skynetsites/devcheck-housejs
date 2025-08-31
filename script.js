@@ -1,6 +1,3 @@
-const FORM_ID = "1FAIpQLSdlahHWiLMMTDBC5PP0mUwU3RTzcUHarPfbeR5AVdGrahcIig";
-const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-
 // Perguntas do quiz
 const perguntasOriginais = [
   // --- PERGUNTAS NÍVEL INICIANTE (4) ---
@@ -586,6 +583,8 @@ function exibirResultado(resultadoData) {
 
 // Função que envia o resultado pro Google Forms
 function enviarResultadoParaPlanilha(resultadoData) {
+  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdlahHWiLMMTDBC5PP0mUwU3RTzcUHarPfbeR5AVdGrahcIig/formResponse";
+
   const params = new URLSearchParams();
   params.append("entry.697814456", nomeUsuario);
   params.append("entry.1742734606", emailUsuario);
