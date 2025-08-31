@@ -295,7 +295,7 @@ input[type="email"]:focus {
 }
 
 #nivel-resultado-final h3 {
-  color: #047fa8ec;
+  color: #0492c2ec;
   margin-bottom: 10px;
 }
 
@@ -421,17 +421,22 @@ input[type="email"]:focus {
 
   /* Opções */
   .opcoes {
+    margin: 10px auto 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    text-align: left;
     width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
     box-sizing: border-box;
   }
 
   .opcoes label {
+    margin: 10px auto 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    text-align: left;
     width: 100%;
     box-sizing: border-box;
   }
-
   /* Botão */
   button {
     font-size: 1.1em;
@@ -439,8 +444,6 @@ input[type="email"]:focus {
     width: 100%;
     max-width: 100%;
     margin-top: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   button:hover {
     transform: translateY(-2px);
@@ -453,7 +456,7 @@ input[type="email"]:focus {
     text-align: center;
   }
   #nivel-resultado-final h3 {
-    color: #026586e7;
+    color: #038ab8e7;
     margin-bottom: 10px;
     font-size: 1.5em;
     text-align: center;
