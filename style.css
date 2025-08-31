@@ -486,8 +486,7 @@ input[type="email"]:focus {
     flex: 0 0 auto; 
     white-space: nowrap;
   }
-
-  /* Resultado */
+  
   .resultado-card {
     padding: 20px;
     margin-top: 20px;

@@ -294,7 +294,7 @@ let respostasUsuario = [];
 let quizConcluido = sessionStorage.getItem("quizConcluido") === "true";
 let resultadoQuiz = JSON.parse(sessionStorage.getItem("resultadoQuiz")) || null;
 
-// Embaralha as perguntas
+// Função para embaralhar as perguntas
 function embaralharArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -303,7 +303,7 @@ function embaralharArray(array) {
   return array;
 }
 
-// Prepara perguntas
+// Função para preparar as perguntas
 function prepararPerguntas() {
   const perguntasIniciante = perguntasOriginais.filter(
     (q) => q.nivel === "Iniciante"
@@ -361,7 +361,7 @@ iniciarQuizBtn.addEventListener("click", () => {
   mostrarSeccao("cadastro");
 });
 
-// Envio do cadastro
+// Envio do cadastro pelo usuário
 cadastroForm.addEventListener("submit", (e) => {
   e.preventDefault();
   nomeUsuario = document.getElementById("nome").value;
@@ -408,7 +408,7 @@ function exibirQuestao() {
   });
 }
 
-// Tratar resposta
+// Função que trata a resposta
 function handleResposta(inputSelecionado) {
   const opcaoSelecionada = inputSelecionado.value;
   const questao = perguntas[indiceQuestaoAtual];
@@ -470,7 +470,7 @@ proximaQuestaoBtn.addEventListener("click", () => {
   }
 });
 
-// Resultado
+// Resultado do quiz
 function exibirResultado(resultadoData) {
   mostrarSeccao("resultado");
 
@@ -584,7 +584,7 @@ function exibirResultado(resultadoData) {
   );
 }
 
-// Enviar para Google Forms
+// Função que envia o resultado pro Google Forms
 function enviarResultadoParaPlanilha(resultadoData) {
   const params = new URLSearchParams();
   params.append("entry.1195497629", nomeUsuario);
@@ -623,7 +623,7 @@ async function enviarResultadoPorEmail(dados) {
         Swal.fire({
           icon: "success",
           title: "Sucesso!",
-          text: "Resultado enviado com sucesso para o seu e-mail!",
+          text: "Resultado enviado com sucesso para seu e-mail!",
           confirmButtonText: "OK",
           confirmButtonColor: "#1c5c1eef"
         });

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Feedback por nível
+    // Feedback por nível a depender de quantas perguntas acertou
     let feedbackNivel = "";
     if (pontuacao <= 4) {
       feedbackNivel =
