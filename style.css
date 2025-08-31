@@ -369,119 +369,135 @@ input[type="email"]:focus {
   margin-top: 10px;
 }
 
-/* Responsividade */
-@media screen and (max-width: 700px) {
+/* Responsividade Mobile */
+@media (max-width: 768px) {
   body {
     padding: 10px;
   }
 
   .quiz-container {
-    padding: 40px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    margin: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: center;
+    padding: 20px 15px;
   }
 
   .house-js-logo {
-    max-width: 250px;
-    margin-bottom: 10px;
+    max-width: 180px;
+    margin-bottom: 25px;
   }
 
   .house-js-logo-small {
+    max-width: 120px;
+    margin-bottom: 15px;
+  }
+
+  .logo-cadastro-large {
     max-width: 200px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   h1 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
+    font-size: 1.6em;
   }
 
   h2 {
     font-size: 1.4em;
-    margin-bottom: 15px;
   }
 
   h3 {
-    font-size: 1.4em;
-    margin-bottom: 10px;
+    font-size: 1.2em;
   }
 
   p {
     font-size: 0.9em;
-    margin-bottom: 10px;
   }
 
-  /* Header da questão */
-  .pergunta-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 30px;
+  button {
+    padding: 14px 20px;
+    font-size: 1em;
+    max-width: 100%;
   }
 
-  .questao-nivel,
-  .questao-categoria {
-    font-size: 0.7em;
-    padding: 6px 12px;
-    width: 100%;
+  #cadastro-form button[type="submit"] {
+    margin-top: 30px;
+    max-width: 100%;
+  }
+
+  .quiz-large .questao {
+    padding: 20px 10px;
+  }
+
+  .quiz-large .questao h3 {
+    font-size: 1.1em;
+    margin-top: 30px;
+  }
+
+  .quiz-large .opcoes {
+    margin-top: 30px;
+    gap: 10px;
+  }
+
+  .quiz-large .opcoes label {
+    padding: 14px 18px;
+    font-size: 0.95em;
     text-align: center;
   }
 
-  /* Pergunta */
-  h3 {
-    font-size: 1.2em;
-    text-align: left;
-    margin-bottom: 15px;
+  .quiz-large .opcoes label span {
+    font-size: 0.85em;
   }
 
-  /* Botão */
-  button {
-    font-size: 1.1em;
-    padding: 12px 18px;
-    width: 100%;
+  .feedback-large {
     max-width: 100%;
-    margin-top: 15px;
+    padding: 8px 12px;
   }
 
-  button:hover {
-    transform: translateY(-2px);
+  .feedback-large p {
+    font-size: 0.85em;
   }
 
-  /* Resultado */
+  .proxima-questao-container-large button {
+    max-width: 100%;
+    padding: 14px 20px;
+    font-size: 1em;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    padding: 12px 14px;
+    font-size: 0.95em;
+  }
+
   .resultado-card {
     padding: 20px;
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  #nivel-resultado-final h3 {
-    color: #038ab8e7;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    text-align: center;
-  }
-
-  #analise-final p {
-    margin-bottom: 15px;
-    text-align: center;
   }
 
   .botoes-resultado {
     flex-direction: column;
-    gap: 15px;
-    text-align: center;
+    gap: 12px;
   }
 
   .botoes-resultado button {
     max-width: 100%;
-    font-size: 1.1em;
-    padding: 14px 20px;
-    text-align: center;
+  }
+
+  .pergunta-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .questao-nivel,
+  .questao-categoria {
+    font-size: 0.75em;
+    padding: 6px 12px;
+  }
+
+  #nivel-resultado-homepage {
+    font-size: 1.2em;
+  }
+
+  #pontuacao-final-homepage {
+    font-size: 1em;
   }
 }
+
+
