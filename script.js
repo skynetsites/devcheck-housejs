@@ -1,6 +1,6 @@
 const FORM_ID = "1FAIpQLSdGlPosYvYxYGk5IC9EV_gxQhTgjz9rXRqN5V9mMhPShU4-JA";
 const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-
+import Swal from "sweetalert2";
 // Perguntas do quiz
 const perguntasOriginais = [
   // --- PERGUNTAS NÍVEL INICIANTE (4) ---
@@ -603,7 +603,6 @@ function enviarResultadoParaPlanilha(resultadoData) {
     );
 }
 
-// Função que envia os dados para o servidor.
 async function enviarResultadoPorEmail(dados) {
   await fetch("https://devcheck-housejs.vercel.app/api/send-email", {
     method: "POST",
@@ -620,17 +619,30 @@ async function enviarResultadoPorEmail(dados) {
     .then((res) => res.json())
     .then((data) => {
       if (data.ok) {
-        alert("Resultado enviado com sucesso para o seu e-mail!");
+        Swal.fire({
+          icon: "success",
+          title: "Sucesso!",
+          text: "Resultado enviado com sucesso para o seu e-mail!",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#417742ff"
+        });
       } else {
-        alert(
-          "Erro ao enviar resultado por e-mail. Tente novamente mais tarde."
-        );
+        Swal.fire({
+          icon: "error",
+          title: "Erro!",
+          text: "Erro ao enviar resultado por e-mail. Tente novamente mais tarde.",
+          confirmButtonText: "Fechar",
+          confirmButtonColor: "rgba(165, 36, 36, 1)"
+        });
       }
     })
     .catch((err) => {
       console.error("Erro de rede:", err);
-      alert(
-        "Não foi possível conectar ao servidor de e-mail. Verifique se o servidor está rodando."
-      );
+      Swal.fire({
+        icon: "warning",
+        title: "Falha de conexão",
+        text: "Não foi possível conectar ao servidor de e-mail. Verifique sua conexão.",
+        confirmButtonText: "OK",
+      });
     });
 }
