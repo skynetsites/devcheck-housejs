@@ -419,14 +419,14 @@
     /* Opções */
     .opcoes {
       width: 100%;
-      max-width: 100%;
+      max-width: 400px;
       margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .opcoes label {
-      padding: 10px 14px;
-      font-size: 1em;
       width: 100%;
+      box-sizing: border-box;
     }
 
     /* Botão */
