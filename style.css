@@ -36,6 +36,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
 .house-js-logo-small {
   max-width: 150px;
   margin-bottom: 20px;
@@ -46,6 +47,7 @@ body {
 .quiz-section {
   display: none;
 }
+
 .quiz-section.active {
   display: block;
 }
@@ -55,15 +57,18 @@ h1 {
   margin-bottom: 15px;
   color: #e6e6e6;
 }
+
 h2 {
   font-size: 1.8em;
   margin-bottom: 20px;
   color: #e6e6e6;
 }
+
 h3 {
   font-size: 1.6em;
   margin-bottom: 15px;
 }
+
 p {
   color: #b0b0b0;
   line-height: 1.6;
@@ -84,14 +89,17 @@ button {
   width: 100%;
   max-width: 350px;
 }
+
 button:hover {
   background-color: #015b79;
 }
+
 #cadastro-form button[type="submit"] {
   max-width: 350px;
   align-self: center;
   margin-top: 55px;
 }
+
 .logo-cadastro-large {
   max-width: 150px;
   margin-bottom: 20px;
@@ -99,6 +107,7 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   margin-top: -20px;
 }
+
 .titulo-cadastro-large {
   font-size: 1.5em;
   margin-bottom: 15px;
@@ -214,12 +223,7 @@ input[type="email"]:focus {
 
 /* Opções */
 .opcoes {
-  margin: 10px auto 0;
-  padding: 12px 14px;
-  border-radius: 8px;
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
+  display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
@@ -229,7 +233,7 @@ input[type="email"]:focus {
   background-color: #444444;
   border: 2px solid #555555;
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 20px 40px;
   text-align: left;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
@@ -364,6 +368,7 @@ input[type="email"]:focus {
   body {
     padding: 10px;
   }
+
   .quiz-container {
     padding: 25px 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -380,22 +385,27 @@ input[type="email"]:focus {
     max-width: 250px;
     margin-bottom: 10px;
   }
+
   .house-js-logo-small {
     max-width: 160px;
     margin-bottom: 30px;
   }
+
   h1 {
     font-size: 1.8em;
     margin-bottom: 10px;
   }
+
   h2 {
     font-size: 1.4em;
     margin-bottom: 15px;
   }
+
   h3 {
     font-size: 1.4em;
     margin-bottom: 10px;
   }
+
   p {
     font-size: 0.9em;
     margin-bottom: 10px;
@@ -432,6 +442,7 @@ input[type="email"]:focus {
     max-width: 100%;
     margin-top: 15px;
   }
+
   button:hover {
     transform: translateY(-2px);
   }
@@ -442,21 +453,25 @@ input[type="email"]:focus {
     margin-top: 20px;
     text-align: center;
   }
+
   #nivel-resultado-final h3 {
     color: #038ab8e7;
     margin-bottom: 10px;
     font-size: 1.5em;
     text-align: center;
   }
+
   #analise-final p {
     margin-bottom: 15px;
     text-align: center;
   }
+
   .botoes-resultado {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
+
   .botoes-resultado button {
     max-width: 100%;
     font-size: 1.1em;
