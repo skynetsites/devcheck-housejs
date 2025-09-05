@@ -46,7 +46,8 @@ const perguntasOriginais = [
           "Correto. Laços de repetição executam um bloco de código múltiplas vezes.",
       },
       {
-        texto: "Dividir o código em várias partes, para que a função possa entrar nas variáveis.",
+        texto:
+          "Dividir o código em várias partes, para que a função possa entrar nas variáveis.",
         correta: false,
         explicacao: "Incorreto. Para dividir o código, usamos funções.",
       },
@@ -63,7 +64,8 @@ const perguntasOriginais = [
         explicacao: "Incorreto. Os programas e dados são o 'software'.",
       },
       {
-        texto: "A parte lógica e intangível de um computador. Funciona de maneira semelhante ao cérebro humano.",
+        texto:
+          "A parte lógica e intangível de um computador. Funciona de maneira semelhante ao cérebro humano.",
         correta: false,
         explicacao: "Incorreto. A parte lógica é o 'software'.",
       },
@@ -96,7 +98,8 @@ const perguntasOriginais = [
       {
         texto: "Criar a estrutura básica e o conteúdo da página.",
         correta: false,
-        explicacao: "Incorreto. A estrutura e o conteúdo são definidos com HTML.",
+        explicacao:
+          "Incorreto. A estrutura e o conteúdo são definidos com HTML.",
       },
     ],
   },
@@ -108,7 +111,8 @@ const perguntasOriginais = [
     pergunta: "O que é 'recursão' em programação?",
     opcoes: [
       {
-        texto: "Um método para quebrar um loop infinito. Exige uma função específica para funcionar.",
+        texto:
+          "Um método para quebrar um loop infinito. Exige uma função específica para funcionar.",
         correta: false,
         explicacao:
           "Incorreto. Para quebrar um loop, usamos `break` ou ajustamos a condição.",
@@ -139,7 +143,8 @@ const perguntasOriginais = [
           "Correto. Algoritmos de ordenação (como Bubble Sort) são fundamentais para organizar dados de forma eficiente.",
       },
       {
-        texto: "Um conjunto de regras para somar números. Não se aplica a ordenação.",
+        texto:
+          "Um conjunto de regras para somar números. Não se aplica a ordenação.",
         correta: false,
         explicacao:
           "Incorreto. Um algoritmo de ordenação não é específico para somas, mas para a organização de dados.",
@@ -147,7 +152,8 @@ const perguntasOriginais = [
       {
         texto: "Um tipo de erro que impede o código de compilar.",
         correta: false,
-        explicacao: "Incorreto. Erros de compilação estão relacionados à sintaxe do código.",
+        explicacao:
+          "Incorreto. Erros de compilação estão relacionados à sintaxe do código.",
       },
     ],
   },
@@ -162,7 +168,8 @@ const perguntasOriginais = [
         explicacao: "Incorreto. Variáveis de texto são `Strings`.",
       },
       {
-        texto: "Um erro que acontece quando a função não encontra um elemento no DOM.",
+        texto:
+          "Um erro que acontece quando a função não encontra um elemento no DOM.",
         correta: false,
         explicacao:
           "Incorreto. O erro de não encontrar um elemento no DOM geralmente é um `TypeError`.",
@@ -191,7 +198,8 @@ const perguntasOriginais = [
           "Incorreto. A complexidade de tempo não mede o tempo exato, mas a taxa de crescimento dele.",
       },
       {
-        texto: "Mede o quanto de memória um algoritmo consome durante a execução.",
+        texto:
+          "Mede o quanto de memória um algoritmo consome durante a execução.",
         correta: false,
         explicacao:
           "Incorreto. O consumo de memória é a 'complexidade de espaço'.",
@@ -208,7 +216,8 @@ const perguntasOriginais = [
   {
     categoria: "Fundamentos da Computação",
     nivel: "Expert",
-    pergunta: "Em redes de computadores, o que é o modelo 'OSI' e qual sua finalidade?",
+    pergunta:
+      "Em redes de computadores, o que é o modelo 'OSI' e qual sua finalidade?",
     opcoes: [
       {
         texto: "Um tipo de linguagem de programação.",
@@ -539,7 +548,9 @@ function exibirResultado(resultadoData) {
       }</p>
       <p><strong>O que você pode fazer:</strong> ${
         pontosMelhorar.length > 0
-          ? `Reforce seus estudos em: <strong>${pontosMelhorar.join(", ")}</strong>.`
+          ? `Reforce seus estudos em: <strong>${pontosMelhorar.join(
+              ", "
+            )}</strong>.`
           : "Continue praticando e explorando novos conceitos para manter seu conhecimento atualizado."
       }</p>
     </div>
@@ -549,24 +560,25 @@ function exibirResultado(resultadoData) {
     </div>
   `;
 
-  enviarResultadoBtn = document.getElementById("enviar-resultado-btn");
-enviarResultadoBtn.addEventListener("click", () => {
+  // Define os dados a serem enviados
   const resultadoParaEnviar = {
     pontuacao: resultadoData.pontuacao,
     nivel,
     pontosFortes,
-    pontosMelhorar
+    ptosMelhorar: pontosMelhorar,
   };
-
-  // envia e-mail
-  enviarResultadoPorEmail(resultadoParaEnviar);
-
-  // envia para a planilha (Google Forms)
+  
+  // A chamada para a planilha deve vir aqui, DEPOIS que o HTML foi renderizado
   enviarResultadoParaPlanilha(resultadoParaEnviar);
 
-  enviarResultadoBtn.disabled = true;
-  enviarResultadoBtn.textContent = "Enviado!";
-});
+  enviarResultadoBtn = document.getElementById("enviar-resultado-btn");
+  enviarResultadoBtn.addEventListener("click", () => {
+    // envia e-mail
+    enviarResultadoPorEmail(resultadoParaEnviar);
+
+    enviarResultadoBtn.disabled = true;
+    enviarResultadoBtn.textContent = "Enviado!";
+  });
 
   refazerTesteBtn = document.getElementById("refazer-teste-btn");
   refazerTesteBtn.addEventListener("click", () => {
@@ -590,7 +602,8 @@ enviarResultadoBtn.addEventListener("click", () => {
 
 // Função que envia o resultado pro Google Forms
 function enviarResultadoParaPlanilha(resultadoData) {
-  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdlahHWiLMMTDBC5PP0mUwU3RTzcUHarPfbeR5AVdGrahcIig/formResponse";
+  const FORM_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSdlahHWiLMMTDBC5PP0mUwU3RTzcUHarPfbeR5AVdGrahcIig/formResponse";
 
   const params = new URLSearchParams();
   params.append("entry.697814456", nomeUsuario);
@@ -622,7 +635,7 @@ async function enviarResultadoPorEmail(dados) {
       pontuacao: dados.pontuacao,
       nivel: dados.nivel,
       pontosFortes: dados.pontosFortes,
-      pontosMelhorar: dados.pontosMelhorar
+      pontosMelhorar: dados.pontosMelhorar,
     }),
   })
     .then((res) => res.json())
@@ -633,7 +646,7 @@ async function enviarResultadoPorEmail(dados) {
           title: "Sucesso!",
           text: "Resultado enviado com sucesso para seu e-mail!",
           confirmButtonText: "OK",
-          confirmButtonColor: "#1c5c1eef"
+          confirmButtonColor: "#1c5c1eef",
         });
       } else {
         Swal.fire({
@@ -641,7 +654,7 @@ async function enviarResultadoPorEmail(dados) {
           title: "Erro!",
           text: "Erro ao enviar resultado por e-mail. Tente novamente mais tarde.",
           confirmButtonText: "Fechar",
-          confirmButtonColor: "rgba(122, 35, 35, 0.94)"
+          confirmButtonColor: "rgba(122, 35, 35, 0.94)",
         });
       }
     })
