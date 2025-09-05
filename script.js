@@ -565,7 +565,7 @@ function exibirResultado(resultadoData) {
     pontuacao: resultadoData.pontuacao,
     nivel,
     pontosFortes,
-    ptosMelhorar: pontosMelhorar,
+    pontosMelhorar: pontosMelhorar,
   };
   
   // A chamada para a planilha deve vir aqui, DEPOIS que o HTML foi renderizado
