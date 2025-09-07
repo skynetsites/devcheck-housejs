@@ -1,3 +1,5 @@
+// ================== Insere o style CSS na <head> ==================
+
 // Cria o elemento <style>
 const estilo = document.createElement("style");
 estilo.type = "text/css";
@@ -40,6 +42,12 @@ estilo.textContent = `
   --border-foco: 1px solid var(--cor-secundaria);
 }
 
+/* Tirar borda de contorno ao focar */
+input,
+button {
+  outline: none;
+}
+
 /* Botão hambúrguer */
 .btn-hamburger {
   position: fixed;
@@ -54,7 +62,7 @@ estilo.textContent = `
   margin: 0;
   z-index: 100;
   display: inline-block;
-  animation: bounce 0.6s infinite alternate;
+  /*animation: bounce 0.6s infinite alternate;*/
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
   color: var(--cor-texto-claro);
@@ -107,19 +115,20 @@ estilo.textContent = `
   color: var(--cor-texto-alerta);
 }
 
-/* Animação do botão */
+/* Animação do botão 
 @keyframes bounce {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+*/
 
 /* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -320px;
-  width: 320px;
+  right: -300px;
+  width: 300px;
   height: 100vh;
   background: var(--cor-fundo);
   box-shadow: var(--box-shadow-sidebar);
@@ -284,19 +293,6 @@ estilo.textContent = `
   text-shadow: 0 4px 15px var(--cor-narrando-shadow);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    right: -100%;
-  }
-
-  .btn-hamburger {
-    top: 15px;
-    right: 15px;
-  }
-}
-
 /* Controle de volume */
 .controle-volume {
   margin-top: 15px;
@@ -327,11 +323,23 @@ estilo.textContent = `
   color: var(--cor-desativado);
 }
 
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    right: -100%;
+  }
+
+  .btn-hamburger {
+    top: 15px;
+    right: 15px;
+  }
+}
 `;
 // Adiciona o <style> no <head> da página
 document.head.appendChild(estilo);
 
-// ================== INSERE O HTML DO SIDEBAR RIGHT PRIMEIRO ==================
+// ================== Insere o HTML do sidebar primeiro ==================
 document.body.insertAdjacentHTML(
   "beforeend",
   `
@@ -347,94 +355,100 @@ document.body.insertAdjacentHTML(
           <select id="select-voz"></select>
           <div id="voz-atual">🔊 Voz atual: Carregando...</div>
         </div>
-
-       <div class="controle-volume">
-          <label for="volume-slider">Volume:</label>
-          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1">
-          <span id="volume-label">100%</span>
+        <div class="controle-volume">
+        <label for="volume-slider">Volume:</label>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1">
+        <span id="volume-label">100%</span>
         </div>
-
         <div class="narradores-especificos">
           <h4>Narradores Específicos:</h4>
           <div class="narrador-grupo">
-            <label for="select-voz-pergunta">Perguntas:</label>
+            <label for="select-voz-pergunta">Pergunta:</label>
             <select id="select-voz-pergunta"></select>
           </div>
           <div class="narrador-grupo">
-            <label for="select-voz-opcoes">Opções:</label>
+            <label for="select-voz-opcoes">Alternativas:</label>
             <select id="select-voz-opcoes"></select>
           </div>
           <div class="narrador-grupo">
-            <label for="select-voz-resposta">Respostas:</label>
+            <label for="select-voz-resposta">Resposta:</label>
             <select id="select-voz-resposta"></select>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <div id="sidebar-overlay" class="sidebar-overlay"></div>
 `
 );
 
-const btnVoz = document.querySelector(".btn-voz")
-const selectVoz = document.getElementById("select-voz")
-const vozAtual = document.getElementById("voz-atual")
+const volumeSlider = document.getElementById("volume-slider");
+const volumeLabel = document.getElementById("volume-label");
 
-const selectVozPergunta = document.getElementById("select-voz-pergunta")
-const selectVozOpcoes = document.getElementById("select-voz-opcoes")
-const selectVozResposta = document.getElementById("select-voz-resposta")
+const btnVoz = document.querySelector(".btn-voz");
+const btnMudo = document.getElementById("btn-mudo");
 
-const closeSidebarBtn = document.getElementById("close-sidebar")
-const sidebar = document.getElementById("sidebar")
-const sidebarOverlay = document.getElementById("sidebar-overlay")
+const selectVoz = document.getElementById("select-voz");
+const vozAtual = document.getElementById("voz-atual");
 
-const volumeSlider = document.getElementById("volume-slider")
-const volumeLabel = document.getElementById("volume-label")
+const selectVozPergunta = document.getElementById("select-voz-pergunta");
+const selectVozOpcoes = document.getElementById("select-voz-opcoes");
+const selectVozResposta = document.getElementById("select-voz-resposta");
 
-let volumeAtual = 1
-let vozAtivada = true
-let vozesDisponiveis = []
-let vozSelecionada = null
+const closeSidebarBtn = document.getElementById("close-sidebar");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebar-overlay");
 
-let vozPergunta = null
-let vozOpcoes = null
-let vozResposta = null
+const analiseFinalDiv = document.getElementById("analise-final");
 
-let filaNarracao = []
-let narracaoAtiva = false
-let narracaoPausada = false
-let indiceNarracaoAtual = 0
-let utteranceAtual = null
-let textoAtual = ""
-let tipoAtual = ""
-let narrandoAlternativas = false
+let volumeAtual = 1;
+
+let vozAtivada = true;
+let vozesDisponiveis = [];
+let vozSelecionada = null;
+let vozPergunta = null;
+let vozOpcoes = null;
+let vozResposta = null;
+
+let filaNarracao = [];
+
+let narracaoAtiva = false;
+let narracaoPausada = false;
+
+let indiceNarracaoAtual = 0;
 
 // ================== FUNÇÕES ==================
 
-// Slider de volume
-//volumeSlider.addEventListener("input", (e) => {
-  //volumeAtual = parseFloat(e.target.value);
-  //volumeLabel.textContent = `${Math.round(volumeAtual * 100)}%`;
+volumeSlider.addEventListener("input", (e) => {
+  e.preventDefault();
 
-  // Se estava mudo e voltou > 0, desativa mudo
-  //if (volumeAtual > 0 && mudoAtivo) {
-   // mudoAtivo = false;
-    //btnMudo.textContent = "🔊 Som";
-  //}
+  // Atualiza a variável global de volume
+  volumeAtual = parseFloat(e.target.value);
+  volumeLabel.textContent = `${Math.round(volumeAtual * 100)}%`;
 
-  // Se a narração está ativa, reinicia a fala atual
+  // Se a narração está ativa, reinicia a fala atual usando o volume atualizado
   //if (narracaoAtiva && filaNarracao[indiceNarracaoAtual]) {
-    //speechSynthesis.cancel(); // cancela a fala atual
-    //processarFilaNarracao(); // reinicia da posição atual com o novo volume
+  ///speechSynthesis.cancel(); // cancela a fala atual
+  //processarFilaNarracao();  // reinicia a fila da posição atual
   //}
-//});
 
-function criarUtterance(texto, voz) {
-  const utterance = new SpeechSynthesisUtterance(texto)
-  utterance.volume = volumeAtual || 1
-  utterance.voice = voz
-  return utterance
+  //btnVoz.blur(); // aprica valume em tempo real (sem sucesso por enquanto)
+});
+
+// Função para criar um utterance padronizado
+function criarUtterance(texto, voz = null) {
+  const utterance = new SpeechSynthesisUtterance(texto);
+  utterance.lang = "pt-BR";
+  utterance.rate = 0.95;
+  utterance.pitch = 1.05;
+  utterance.volume = volumeAtual; // usa o valor do slider;
+  if (voz) utterance.voice = voz;
+
+  //if (voz && typeof voz === "object" && voz instanceof SpeechSynthesisVoice) {
+  //utterance.voice = voz;
+  //}
+
+  return utterance;
 }
 
 function atualizarVozAoVivo(tipo, novaVoz) {
@@ -458,80 +472,6 @@ function atualizarVozAoVivo(tipo, novaVoz) {
   if (narracaoAtiva && filaNarracao[indiceNarracaoAtual]) {
     speechSynthesis.cancel(); // cancela a narração atual
     processarFilaNarracao(); // reinicia da posição atual com a nova voz
-  }
-}
-
-
-// Slider de volume
-volumeSlider.addEventListener("input", (e) => {
-  e.preventDefault()
-
-  // Atualiza a variável global de volume
-  volumeAtual = Number.parseFloat(e.target.value)
-  volumeLabel.textContent = `${Math.round(volumeAtual * 100)}%`
-
-  if (narracaoAtiva && utteranceAtual) {
-    // Salva posição atual e texto
-    const textoRestante = textoAtual
-    const tipoRestante = tipoAtual
-
-    // Cancela fala atual
-    speechSynthesis.cancel()
-
-    // Reinicia imediatamente com novo volume
-    setTimeout(() => {
-      if (vozAtivada && !narracaoPausada) {
-        const vozParaUsar = obterVozPorTipo(tipoRestante)
-        const utterance = criarUtterance(textoRestante, vozParaUsar)
-        utteranceAtual = utterance
-
-        // Mantém os event listeners
-        configurarEventListenersUtterance(utterance, tipoRestante)
-        speechSynthesis.speak(utterance)
-      }
-    }, 10)
-  }
-})
-
-function obterVozPorTipo(tipo) {
-  switch (tipo) {
-    case "pergunta":
-      return vozPergunta
-    case "opcoes":
-      return vozOpcoes
-    case "resposta":
-      return vozResposta
-    default:
-      return vozSelecionada
-  }
-}
-
-function configurarEventListenersUtterance(utterance, tipo) {
-  let opcaoLabel = null
-  if (tipo === "opcoes") {
-    const letra = textoAtual.split(":")[0].replace("Alternativa ", "").trim()
-    opcaoLabel = document.querySelector(`.opcao-label[data-letra="${letra}"]`)
-    if (opcaoLabel) opcaoLabel.classList.add("narrando")
-  }
-
-  utterance.onend = () => {
-    if (opcaoLabel) opcaoLabel.classList.remove("narrando")
-    utteranceAtual = null
-    indiceNarracaoAtual++
-
-    if (indiceNarracaoAtual < filaNarracao.length && !narracaoPausada) {
-      processarFilaNarracao()
-    } else {
-      narracaoAtiva = false
-      narrandoAlternativas = false
-    }
-  }
-
-  utterance.onerror = () => {
-    if (opcaoLabel) opcaoLabel.classList.remove("narrando")
-    utteranceAtual = null
-    narracaoAtiva = false
-    narrandoAlternativas = false
   }
 }
 
@@ -647,7 +587,7 @@ function simplificarNome(vozNome) {
 function carregarVozes() {
   vozesDisponiveis = speechSynthesis
     .getVoices()
-    .filter((v) => v.lang.startsWith("pt"));
+    .filter((v) => v.lang.startsWith("pt-BR"));
   if (vozesDisponiveis.length === 0) return;
 
   // Define vozes padrão
@@ -678,11 +618,11 @@ function carregarVozes() {
       }
     }
   );
-  if (vozAtual) {
-    vozAtual.textContent = `🔊 Voz atual: ${simplificarNome(
-      vozSelecionada.name
-    )}`;
-  }
+  //if (vozAtual) {
+  //vozAtual.textContent = `🔊 Voz atual: ${simplificarNome(
+  //vozSelecionada.name
+  //)}`;
+  //}
 }
 
 speechSynthesis.onvoiceschanged = carregarVozes;
@@ -813,10 +753,9 @@ function exibirQuestao() {
       once: true,
     });
   });
-
-  const hamburgerBtnNovo = document.getElementById("btn-hamburger");
-  if (hamburgerBtnNovo) {
-    hamburgerBtnNovo.addEventListener("click", abrirSidebar);
+  const btnHamburger = document.getElementById("btn-hamburger");
+  if (btnHamburger) {
+    btnHamburger.addEventListener("click", abrirSidebar);
   }
 
   //console.log("Aplicação iniciada!");
@@ -895,11 +834,11 @@ function handleResposta2(inputSelecionado2) {
 
 function getIconeEstadoNarracao() {
   if (!vozAtivada) {
-    return "🔇"; // Ícone de som desativado quando voz está desativada
+    return "🔇"; // Ícone de som desativado
   } else if (narracaoPausada) {
-    return "🔇"; // Ícone de som pausado quando narração está pausada
+    return "🔇"; // Ícone de som pausado
   } else {
-    return "🔊"; // Ícone de som ativo (padrão quando voz está ativa)
+    return "🔊"; // Ícone de som ativo
   }
 }
 
@@ -922,10 +861,10 @@ function atualizarBotaoVoz() {
 }
 
 function atualizarIconeHamburger() {
-  const hamburgerBtn = document.getElementById("btn-hamburger");
-  if (hamburgerBtn) {
-    hamburgerBtn.textContent = getIconeEstadoNarracao();
-    hamburgerBtn.classList.toggle("paused", narracaoPausada);
+  const btnHamburger = document.getElementById("btn-hamburger");
+  if (btnHamburger) {
+    btnHamburger.textContent = getIconeEstadoNarracao();
+    btnHamburger.classList.toggle("paused", narracaoPausada);
   }
 }
 
@@ -1047,7 +986,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==================== Para a narração na análise final ====================
-const analiseFinalDiv = document.getElementById("analise-final");
 if (analiseFinalDiv) {
   const observer = new MutationObserver((mutationsList) => {
     for (let mutation of mutationsList) {
