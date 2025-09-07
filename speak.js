@@ -1,4 +1,4 @@
-// ================== Insere o style CSS na <head> ==================
+// ================== Insere o style CSS na <style> no <head> ==================
 
 // Cria o elemento <style>
 const estilo = document.createElement("style");
@@ -62,7 +62,7 @@ button {
   margin: 0;
   z-index: 100;
   display: inline-block;
-  /*animation: bounce 0.6s infinite alternate;*/
+  animation: bounce 0.6s infinite alternate;
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
   color: var(--cor-texto-claro);
@@ -78,6 +78,15 @@ button {
   background-color: var(--cor-alerta);
   border-color: var(--cor-alerta);
   color: var(--cor-texto-alerta);
+  animation: none;
+}
+
+.btn-hamburger.desativado,
+.btn-hamburger.desativado,
+.btn-voz.desativado {
+  background-color: var(--cor-desativado);
+  border-color: var(--cor-desativado);
+  color: var(--cor-texto-claro);
   animation: none;
 }
 
@@ -103,25 +112,18 @@ button {
   background-color: var(--cor-primaria-hover);
 }
 
-.btn-voz.desativado {
-  background-color: var(--cor-desativado);
-  border-color: var(--cor-desativado);
-  color: var(--cor-texto-claro);
-}
-
 .btn-voz.pausado {
   background-color: var(--cor-alerta);
   border-color: var(--cor-alerta);
   color: var(--cor-texto-alerta);
 }
 
-/* Animação do botão 
+/* Animação do botão */
 @keyframes bounce {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
-*/
 
 /* Sidebar */
 .sidebar {
@@ -333,10 +335,15 @@ button {
   .btn-hamburger {
     top: 15px;
     right: 15px;
+    font-size: 22px;
+  }
+  
+  .btn-voz {
+    padding: 15px 20px;
+    font-size: 18px;
   }
 }
 `;
-// Adiciona o <style> no <head> da página
 document.head.appendChild(estilo);
 
 // ================== Insere o HTML do sidebar primeiro ==================
@@ -736,7 +743,7 @@ function exibirQuestao() {
           .join("")}
       </div>
       <!-- Botão hambúrguer com ícone de som dinâmico -->
-      <button id="btn-hamburger" class="btn-hamburger ${
+      <button class="btn-hamburger ${
         narracaoPausada ? "paused" : ""
       }">
         ${getIconeEstadoNarracao()}
@@ -753,7 +760,7 @@ function exibirQuestao() {
       once: true,
     });
   });
-  const btnHamburger = document.getElementById("btn-hamburger");
+  const btnHamburger = document.querySelector(".btn-hamburger");
   if (btnHamburger) {
     btnHamburger.addEventListener("click", abrirSidebar);
   }
@@ -843,9 +850,11 @@ function getIconeEstadoNarracao() {
 }
 
 function atualizarBotaoVoz() {
+  const btnHamburger = document.querySelector(".btn-hamburger");
   if (!vozAtivada) {
     btnVoz.textContent = "🔇 Voz Desativada";
     btnVoz.classList.add("desativado");
+    btnHamburger.classList.add("desativado");
     btnVoz.classList.remove("ativado", "pausado");
   } else if (narracaoPausada) {
     btnVoz.textContent = "🔇 Voz Pausada";
@@ -855,13 +864,14 @@ function atualizarBotaoVoz() {
     btnVoz.textContent = "🔊 Voz Ativada";
     btnVoz.classList.add("ativado");
     btnVoz.classList.remove("pausado", "desativado");
+    btnHamburger.classList.remove("desativado");
   }
 
   atualizarIconeHamburger();
 }
 
 function atualizarIconeHamburger() {
-  const btnHamburger = document.getElementById("btn-hamburger");
+  const btnHamburger = document.querySelector(".btn-hamburger");
   if (btnHamburger) {
     btnHamburger.textContent = getIconeEstadoNarracao();
     btnHamburger.classList.toggle("paused", narracaoPausada);
