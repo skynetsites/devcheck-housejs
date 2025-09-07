@@ -353,7 +353,7 @@ document.body.insertAdjacentHTML(
   <div id="sidebar" class="sidebar">
     <div class="sidebar-header">
       <h3>Configurações de Voz</h3>
-      <button id="close-sidebar" class="btn-fechar">&times;</button>
+      <button id="sidebar-close" class="btn-fechar">&times;</button>
     </div>
     <div class="sidebar-content">
       <div class="controles-voz">
@@ -402,9 +402,9 @@ const selectVozPergunta = document.getElementById("select-voz-pergunta");
 const selectVozOpcoes = document.getElementById("select-voz-opcoes");
 const selectVozResposta = document.getElementById("select-voz-resposta");
 
-const closeSidebarBtn = document.getElementById("close-sidebar");
 const sidebar = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
+const btnSidebarClose = document.getElementById("sidebar-close");
 
 const analiseFinalDiv = document.getElementById("analise-final");
 
@@ -986,8 +986,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (closeSidebarBtn) {
-    closeSidebarBtn.addEventListener("click", fecharSidebar);
+  if (btnSidebarClose) {
+    btnSidebarClose.addEventListener("click", fecharSidebar);
   }
 
   if (sidebarOverlay) {
