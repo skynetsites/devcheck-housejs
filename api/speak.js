@@ -357,7 +357,8 @@ document.body.insertAdjacentHTML(
     </div>
     <div class="sidebar-content">
       <div class="controles-voz">
-        <button class="btn-voz">🔊 Voz Ativada</button>
+        <button hidden class="btn-voz">🔊 Voz Ativada</button>
+        <button id="btnMute">🔊 Mute Narrador</button>
         <div hidden>
           <select id="select-voz"></select>
           <div id="voz-atual">🔊 Voz atual: Carregando...</div>
@@ -366,6 +367,7 @@ document.body.insertAdjacentHTML(
         <label for="volume-slider">Volume:</label>
         <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1">
         <span id="volume-label">100%</span>
+
         </div>
         <div class="narradores-especificos">
           <h4>Narradores Específicos:</h4>
@@ -426,20 +428,161 @@ let indiceNarracaoAtual = 0;
 
 // ================== FUNÇÕES ==================
 
+// --- INSERIR APÓS: let volumeAtual = 1; let utteranceAtual = null; ----------------
+let narradorMutado = false;
+let previousVolume = volumeAtual; // guarda volume anterior ao mutar
+
+// criar botão MUTE (se quiser usar o botão já existente, adapte o seletor)
+const controlesVozDiv = document.querySelector(".controles-voz");
+let btnMute = document.getElementById("btnMute");
+if (!btnMute) {
+  btnMute = document.createElement("button");
+  btnMute.id = "btnMute";
+  btnMute.className = "btn-voz";
+  btnMute.textContent = "🔇 Narrador OFF";
+  if (controlesVozDiv) controlesVozDiv.insertBefore(btnMute, controlesVozDiv.firstChild);
+}
+
+// Toggle mute com efeito imediato
+btnMute.addEventListener("click", () => {
+  narradorMutado = !narradorMutado;
+  btnMute.textContent = narradorMutado ? "🔊 Narrador ON" : "🔇 Narrador OFF";
+
+  if (narradorMutado) {
+    // guardar volume e silenciar futuros utterances
+    previousVolume = volumeAtual;
+    volumeAtual = 0;
+
+    // 🚩 Remove todos os destaques visuais das alternativas
+    
+// remove todas as classes narrando do DOM imediatamente
+    document.querySelectorAll(".opcao-label.narrando").forEach(el => {
+      el.classList.remove("narrando");
+    });
+    
+    // Se estiver falando algo agora, cancela e reinicia mudo
+    if (speechSynthesis.speaking) {
+      document.querySelectorAll(".opcao-label.narrando").forEach(el => {
+      el.classList.remove("narrando");
+    });
+      const currentIndex = Math.max(0, indiceNarracaoAtual);
+      speechSynthesis.cancel();
+      setTimeout(() => {
+        if (filaNarracao[currentIndex]) {
+          indiceNarracaoAtual = currentIndex;
+          speakFilaItem(currentIndex); // volume = 0, sem destaque
+        }
+      }, 30);
+    }
+  } else {
+    // restaurar volume
+    volumeAtual = previousVolume || 1;
+    
+      document.querySelectorAll(".opcao-label.narrando").forEach(el => {
+      el.classList.remove("narrando");
+    });
+
+    // 🚩 No próximo utterance a classe "narrando" voltará a ser adicionada normalmente
+    if (speechSynthesis.speaking) {
+      const currentIndex = Math.max(0, indiceNarracaoAtual);
+      speechSynthesis.cancel();
+      setTimeout(() => {
+        if (filaNarracao[currentIndex]) {
+          indiceNarracaoAtual = currentIndex;
+          speakFilaItem(currentIndex); // agora com som e destaque
+        }
+      }, 30);
+    }
+  }
+
+  if (typeof atualizarBotaoVoz === "function") {
+    atualizarBotaoVoz(); // atualiza UI se existir essa função
+  }
+});
+
+// Helper: fala o item da fila no índice fornecido (centraliza a lógica)
+function speakFilaItem(index) {
+  if (!filaNarracao[index]) return;
+
+  const item = filaNarracao[index];
+
+  // Seleciona a voz correta
+  let vozParaUsar = vozSelecionada;
+  switch (item.tipo) {
+    case "pergunta":
+      vozParaUsar = vozPergunta || vozSelecionada;
+      break;
+    case "opcoes":
+      vozParaUsar = vozOpcoes || vozSelecionada;
+      break;
+    case "resposta":
+      vozParaUsar = vozResposta || vozSelecionada;
+      break;
+  }
+
+  // Cria utterance (criarUtterance usa volumeAtual, que refletirá o estado mutado)
+  const utter = criarUtterance(item.texto, vozParaUsar);
+  utteranceAtual = utter; // expõe globalmente para controles
+
+  // Função que aplica destaque às alternativas
+function aplicarDestaqueOpcao(opcaoLabel) {
+  if (!narradorMutado && opcaoLabel) {
+    opcaoLabel.classList.add("narrando");
+  }
+}
+
+// Função que remove destaque de alternativas
+function removerDestaqueOpcao(opcaoLabel) {
+  if (opcaoLabel) {
+    opcaoLabel.classList.remove("narrando");
+  }
+}
+
+  
+  // Destacar alternativa (mesma lógica que tinha no processarFilaNarracao)
+  let opcaoLabel = null;
+  if (item.tipo === "opcoes") {
+    const match = item.texto.match(/Alternativa ([A-Z]):/);
+    if (match) {
+      const letra = match[1];
+      opcaoLabel = document.querySelector(`.opcao-label[data-letra="${letra}"]`);
+      aplicarDestaqueOpcao(opcaoLabel); // aplica somente se não estiver mutado
+    }
+  }
+
+  utter.onend = () => {
+    removerDestaqueOpcao(opcaoLabel);
+    indiceNarracaoAtual++;
+    // segue o fluxo normal (processa próxima se houver)
+    processarFilaNarracao();
+  };
+
+  utter.onerror = () => {
+    narracaoAtiva = false;
+  };
+
+  // Garante que narracaoAtiva esteja true ao falar
+  narracaoAtiva = true;
+  speechSynthesis.speak(utter);
+}
+
+// Substitui a implementação anterior por esta, que delega ao speakFilaItem
+function processarFilaNarracao() {
+  if (!vozAtivada || narracaoPausada || indiceNarracaoAtual >= filaNarracao.length) {
+    narracaoAtiva = false;
+    return;
+  }
+  // Fala o item atual da fila
+  speakFilaItem(indiceNarracaoAtual);
+}
+
+
 volumeSlider.addEventListener("input", (e) => {
   e.preventDefault();
 
   // Atualiza a variável global de volume
   volumeAtual = parseFloat(e.target.value);
   volumeLabel.textContent = `${Math.round(volumeAtual * 100)}%`;
-
-  // Se a narração está ativa, reinicia a fala atual usando o volume atualizado
-  //if (narracaoAtiva && filaNarracao[indiceNarracaoAtual]) {
-  ///speechSynthesis.cancel(); // cancela a fala atual
-  //processarFilaNarracao();  // reinicia a fila da posição atual
-  //}
-
-  //btnVoz.blur(); // aprica valume em tempo real (sem sucesso por enquanto)
 });
 
 // Função para criar um utterance padronizado
@@ -450,10 +593,6 @@ function criarUtterance(texto, voz = null) {
   utterance.pitch = 1.05;
   utterance.volume = volumeAtual; // usa o valor do slider;
   if (voz) utterance.voice = voz;
-
-  //if (voz && typeof voz === "object" && voz instanceof SpeechSynthesisVoice) {
-  //utterance.voice = voz;
-  //}
 
   return utterance;
 }
