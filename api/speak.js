@@ -2,8 +2,6 @@
 
 // Cria o elemento <style>
 const estilo = document.createElement("style");
-estilo.type = "text/css";
-
 // Coloca o CSS dentro do <style>
 estilo.textContent = `
 /* Root de cores e sombras */
@@ -254,7 +252,7 @@ button {
 .opcao-label.narrando {
   border: 2px solid var(--cor-narrando-hover);
   background-color: var(--cor-narrando);
-  box-shadow: var(--box-shadow-narrando)!important;
+  /*box-shadow: var(--box-shadow-narrando);*/
   border-radius: 5px;
   padding: 5px;
   font-weight: bold;
@@ -367,11 +365,13 @@ document.body.insertAdjacentHTML(
 `
 );
 
+// ==================== VARIÁVEIS GLOBAIS ====================
+
 const volumeSlider = document.getElementById("volume-slider");
 const volumeLabel = document.getElementById("volume-label");
 
 const btnSidebarClose = document.getElementById("sidebar-close");
-const btnMudo = document.getElementById("btnMute");
+const btnMute = document.getElementById("btnMute");
 
 const vozAtual = document.getElementById("voz-atual");
 
@@ -403,6 +403,8 @@ let narracaoPausada = false;
 let indiceNarracaoAtual = 0;
 
 let previousVolume = volumeAtual;
+
+let narracaoAtivaNasPerguntas = false;
 
 // ================== FUNÇÕES ==================
 
@@ -498,19 +500,23 @@ function speakFilaItem(index) {
 // Toggle mute com efeito imediato
 btnMute.addEventListener("click", () => {
   narradorMutado = !narradorMutado;
-  
+
   const btnHamb = document.querySelector(".btn-hamburger");
   [btnHamb, btnMute].forEach((btn, i, arr) => {
     btn.textContent = narradorMutado
-      ? (i ? "🔊 Ativar Narrador" : "🔇")
-      : (i ? "🔇 Desativar Narrador" : "🔊");
+      ? i
+        ? "🔊 Ativar Narrador"
+        : "🔇"
+      : i
+      ? "🔇 Desativar Narrador"
+      : "🔊";
     btn.style.background = narradorMutado ? "#fda006" : "";
     arr[1 - i].style.animation = narradorMutado ? "none" : "";
   });
-  
+
   if (narradorMutado) {
     // guardar volume e silenciar futuros utterances
-    
+
     previousVolume = volumeAtual;
     volumeAtual = 0;
 
@@ -554,10 +560,6 @@ btnMute.addEventListener("click", () => {
       }, 30);
     }
   }
-
-  if (typeof atualizarBotaoVoz === "function") {
-    atualizarBotaoVoz(); // atualiza UI se existir essa função
-  }
 });
 
 volumeSlider.addEventListener("input", (e) => {
@@ -599,8 +601,8 @@ function atualizarVozAoVivo(tipo, novaVoz) {
 
   // Se tiver narração ativa, reinicia do ponto atual
   if (narracaoAtiva && filaNarracao[indiceNarracaoAtual]) {
-    //speechSynthesis.cancel(); // cancela a narração atual
-    speechSynthesis.pause(); // pausa a narração atual
+    speechSynthesis.cancel(); // cancela a narração atual
+    //speechSynthesis.pause(); // pausa a narração atual
     processarFilaNarracao(); // reinicia da posição atual com a nova voz
   }
 }
@@ -628,8 +630,6 @@ function retomarNarracao() {
     ) {
       processarFilaNarracao();
     }
-
-    atualizarIconeHamburger();
   }
 }
 
@@ -652,80 +652,93 @@ function simplificarNome(vozNome) {
 }
 
 function carregarVozes() {
-  vozesDisponiveis = speechSynthesis
-    .getVoices()
-    .filter((v) => v.lang.startsWith("pt-BR"));
-  if (vozesDisponiveis.length === 0) return;
+  vozesDisponiveis = speechSynthesis.getVoices().filter(v => v.lang.startsWith("pt-BR"));
+  if (!vozesDisponiveis.length) return;
 
-  // Define vozes padrão
-  vozSelecionada = vozesDisponiveis[0];
-  vozPergunta = vozesDisponiveis[4] || vozSelecionada;
-  vozOpcoes = vozesDisponiveis[2] || vozSelecionada;
-  vozResposta = vozesDisponiveis[3] || vozSelecionada;
+  // Recupera vozes salvas do sessionStorage
+  const vozPrincipalSalva = sessionStorage.getItem("vozPrincipal");
+  const vozPerguntaSalva  = sessionStorage.getItem("vozPergunta");
+  const vozOpcoesSalva    = sessionStorage.getItem("vozOpcoes");
+  const vozRespostaSalva  = sessionStorage.getItem("vozResposta");
 
-  // Preenche os selects com a voz selecionada marcada
-  [selectVoz, selectVozPergunta, selectVozOpcoes, selectVozResposta].forEach(
-    (el) => {
-      if (el) {
-        el.innerHTML = vozesDisponiveis
-          .map((v) => {
-            let selecionada = "";
-            if (
-              (el === selectVoz && v === vozSelecionada) ||
-              (el === selectVozPergunta && v === vozPergunta) ||
-              (el === selectVozOpcoes && v === vozOpcoes) ||
-              (el === selectVozResposta && v === vozResposta)
-            )
-              selecionada = "selected";
-            return `<option value="${v.name}" ${selecionada}>${simplificarNome(
-              v.name
-            )}</option>`;
-          })
-          .join("");
-      }
+  // Define vozes padrão ou restauradas
+  vozSelecionada = vozesDisponiveis.find(v => v.name === vozPrincipalSalva) || vozesDisponiveis[0];
+  vozPergunta    = vozesDisponiveis.find(v => v.name === vozPerguntaSalva) || vozesDisponiveis[4] || vozSelecionada;
+  vozOpcoes      = vozesDisponiveis.find(v => v.name === vozOpcoesSalva) || vozesDisponiveis[2] || vozSelecionada;
+  vozResposta    = vozesDisponiveis.find(v => v.name === vozRespostaSalva) || vozesDisponiveis[3] || vozSelecionada;
+
+  const selects = [
+    { el: selectVoz, chave: "vozPrincipal", voz: vozSelecionada },
+    { el: selectVozPergunta, chave: "vozPergunta", voz: vozPergunta },
+    { el: selectVozOpcoes, chave: "vozOpcoes", voz: vozOpcoes },
+    { el: selectVozResposta, chave: "vozResposta", voz: vozResposta },
+  ];
+
+  selects.forEach(({ el, chave, voz }) => {
+    if (!el) return;
+
+    // Atualiza opções mantendo a seleção
+    el.innerHTML = vozesDisponiveis
+      .map(v => `<option value="${v.name}" ${v.name === voz.name ? "selected" : ""}>
+                    ${simplificarNome(v.name)}
+                 </option>`)
+      .join("");
+
+    // Adiciona listener apenas uma vez
+    if (!el.dataset.listenerAtivo) {
+      el.addEventListener("change", e => {
+        const novaVoz = vozesDisponiveis.find(v => v.name === e.target.value);
+        if (!novaVoz) return;
+
+        sessionStorage.setItem(chave, e.target.value);
+        atualizarVozAoVivo(chave === "vozPrincipal" ? "geral" : chave, novaVoz);
+      });
+      el.dataset.listenerAtivo = "true"; // marca que listener já existe
     }
-  );
-  //if (vozAtual) {
-  //vozAtual.textContent = `🔊 Voz atual: ${simplificarNome(
-  //vozSelecionada.name
-  //)}`;
-  //}
+  });
+
+  if (vozAtual) {
+    vozAtual.textContent = `🔊 Voz atual: ${simplificarNome(vozSelecionada.name)}`;
+  }
 }
 
+// Chamar depois de carregar o DOM
 speechSynthesis.onvoiceschanged = carregarVozes;
 window.addEventListener("load", carregarVozes);
 
-speechSynthesis.onvoiceschanged = () => {
-  //console.log("Evento voiceschanged disparado");
-  carregarVozes();
-};
+// 1) Tenta carregar imediatamente
+carregarVozes();
 
-document.addEventListener("DOMContentLoaded", () => {
-  //console.log("DOM carregado, tentando carregar vozes");
-  // Tenta carregar imediatamente
-  carregarVozes();
+// 2) Recarrega quando o navegador disparar o evento (Android/Chrome)
+speechSynthesis.onvoiceschanged = carregarVozes;
 
-  setTimeout(() => {
-    //console.log("Tentativa após 100ms");
-    carregarVozes();
-  }, 100);
-
-  setTimeout(() => {
-    //console.log("Tentativa após 500ms");
-    carregarVozes();
-  }, 500);
-
-  setTimeout(() => {
-    //console.log("entativa após 1000ms");
-    carregarVozes();
-  }, 1000);
+// 3) Fallback: tenta mais algumas vezes caso o evento não venha
+[100, 500, 1000].forEach((ms) => {
+  setTimeout(carregarVozes, ms);
 });
 
-window.addEventListener("load", () => {
-  //console.log("Window load, carregando vozes");
-  carregarVozes();
-});
-
+// ==================== FUNÇÃO FALAR ====================
+function falar(texto) {
+  if (isMuted || !texto || !narracaoAtivaNasPerguntas) return; // só fala se for perguntas
+  const utterance = criarUtterance(texto, vozSelecionada);
+  window.speechSynthesis.cancel();
+  utterance.onend = () => {
+    estaNarrando = false;
+  };
+  utterance.onerror = (e) => {
+    console.error("Erro na fala:", e);
+    estaNarrando = false;
+  };
+  utterance.onpause = () => {
+    estaNarrando = false;
+  };
+  utterance.onresume = () => {
+    estaNarrando = true;
+  };
+  window.speechSynthesis.speak(utterance);
+  utteranceAtual = utterance;
+  estaNarrando = true;
+}
 
 function iniciarNarracao() {
   if (!vozAtivada || filaNarracao.length === 0) return;
@@ -757,8 +770,7 @@ function narrarPerguntaCompleta(questao, opcoes) {
 function exibirQuestao() {
   const questao = perguntas[indiceQuestaoAtual];
   const opcoesEmbaralhadas = embaralharArray([...questao.opcoes]);
-  
-  
+
   const btnHamb = document.querySelector(".btn-hamburger");
   btnHamb.style.display = "block";
 
@@ -788,12 +800,13 @@ function exibirQuestao() {
 
   narrarPerguntaCompleta(questao, opcoesEmbaralhadas);
 
-  // Listener das opções
+  /* Listener das opções */
   document.querySelectorAll('input[name="opcao"]').forEach((input) => {
     input.addEventListener("click", () => handleResposta2(input), {
       once: true,
     });
   });
+
   const btnHamburger = document.querySelector(".btn-hamburger");
   if (btnHamburger) {
     btnHamburger.addEventListener("click", abrirSidebar);
@@ -946,14 +959,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==================== Para a narração na análise final ====================
+
 if (analiseFinalDiv) {
   const observer = new MutationObserver((mutationsList) => {
     for (let mutation of mutationsList) {
       if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-        // Conteúdo foi adicionado → apenas para a narração
-        narracaoPausada = true;
-        narracaoAtiva = false;
-        speechSynthesis.cancel(); // cancela a narração atual
+        // desativa narração fora das perguntas
+        narracaoAtivaNasPerguntas = false;
+        speechSynthesis.cancel();
+        estaNarrando = false;
       }
     }
   });
