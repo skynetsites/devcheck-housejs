@@ -73,26 +73,8 @@ button {
   background-color: var(--cor-primaria-hover);
 }
 
-.btn-hamburger.paused,
-.btn-hamburger.paused:hover {
-  background-color: var(--cor-alerta);
-  border-color: var(--cor-alerta);
-  color: var(--cor-texto-alerta);
-  animation: none;
-}
-
-.btn-hamburger.desativado,
-.btn-hamburger.desativado,
-.btn-voz.desativado {
-  background-color: var(--cor-desativado);
-  border-color: var(--cor-desativado);
-  color: var(--cor-texto-claro);
-  animation: none;
-}
-
 /* Botão de voz */
-.btn-voz,
-.btn-voz.ativado {
+#btnMute {
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
   color: var(--cor-texto-claro);
@@ -107,15 +89,8 @@ button {
   text-align: center;
 }
 
-.btn-voz:hover,
-.btn-voz.ativado:hover {
+#btnMute:hover {
   background-color: var(--cor-primaria-hover);
-}
-
-.btn-voz.pausado {
-  background-color: var(--cor-alerta);
-  border-color: var(--cor-alerta);
-  color: var(--cor-texto-alerta);
 }
 
 /* Animação do botão */
@@ -357,8 +332,7 @@ document.body.insertAdjacentHTML(
     </div>
     <div class="sidebar-content">
       <div class="controles-voz">
-        <button hidden class="btn-voz">🔊 Voz Ativada</button>
-        <button id="btnMute">🔊 Mute Narrador</button>
+        <button id="btnMute">🔇 Desativar Narrador</button>
         <div hidden>
           <select id="select-voz"></select>
           <div id="voz-atual">🔊 Voz atual: Carregando...</div>
@@ -387,6 +361,8 @@ document.body.insertAdjacentHTML(
       </div>
     </div>
   </div>
+  <!-- Botão hambúrguer com ícone de som dinâmico -->
+  <button style="display:none" class="btn-hamburger">🔊</button>
   <div id="sidebar-overlay" class="sidebar-overlay"></div>
 `
 );
@@ -394,19 +370,18 @@ document.body.insertAdjacentHTML(
 const volumeSlider = document.getElementById("volume-slider");
 const volumeLabel = document.getElementById("volume-label");
 
-const btnVoz = document.querySelector(".btn-voz");
-const btnMudo = document.getElementById("btn-mudo");
+const btnSidebarClose = document.getElementById("sidebar-close");
+const btnMudo = document.getElementById("btnMute");
 
-const selectVoz = document.getElementById("select-voz");
 const vozAtual = document.getElementById("voz-atual");
 
+const selectVoz = document.getElementById("select-voz");
 const selectVozPergunta = document.getElementById("select-voz-pergunta");
 const selectVozOpcoes = document.getElementById("select-voz-opcoes");
 const selectVozResposta = document.getElementById("select-voz-resposta");
 
 const sidebar = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
-const btnSidebarClose = document.getElementById("sidebar-close");
 
 const analiseFinalDiv = document.getElementById("analise-final");
 
@@ -421,86 +396,40 @@ let vozResposta = null;
 
 let filaNarracao = [];
 
+let narradorMutado = false;
 let narracaoAtiva = false;
 let narracaoPausada = false;
 
 let indiceNarracaoAtual = 0;
 
-// ================== FUNÇÕES ==================
+let previousVolume = volumeAtual;
 
-// --- INSERIR APÓS: let volumeAtual = 1; let utteranceAtual = null; ----------------
-let narradorMutado = false;
-let previousVolume = volumeAtual; // guarda volume anterior ao mutar
+// ================== FUNÇÕES ==================
 
 // criar botão MUTE (se quiser usar o botão já existente, adapte o seletor)
 const controlesVozDiv = document.querySelector(".controles-voz");
-let btnMute = document.getElementById("btnMute");
 if (!btnMute) {
   btnMute = document.createElement("button");
   btnMute.id = "btnMute";
-  btnMute.className = "btn-voz";
-  btnMute.textContent = "🔇 Narrador OFF";
-  if (controlesVozDiv) controlesVozDiv.insertBefore(btnMute, controlesVozDiv.firstChild);
+  btnMute.textContent = "🔇 Desativar Narrador";
+  if (controlesVozDiv)
+    controlesVozDiv.insertBefore(btnMute, controlesVozDiv.firstChild);
 }
 
-// Toggle mute com efeito imediato
-btnMute.addEventListener("click", () => {
-  narradorMutado = !narradorMutado;
-  btnMute.textContent = narradorMutado ? "🔊 Narrador ON" : "🔇 Narrador OFF";
-
-  if (narradorMutado) {
-    // guardar volume e silenciar futuros utterances
-    previousVolume = volumeAtual;
-    volumeAtual = 0;
-
-    // 🚩 Remove todos os destaques visuais das alternativas
-    
-// remove todas as classes narrando do DOM imediatamente
-    document.querySelectorAll(".opcao-label.narrando").forEach(el => {
-      el.classList.remove("narrando");
-    });
-    
-    // Se estiver falando algo agora, cancela e reinicia mudo
-    if (speechSynthesis.speaking) {
-      document.querySelectorAll(".opcao-label.narrando").forEach(el => {
-      el.classList.remove("narrando");
-    });
-      const currentIndex = Math.max(0, indiceNarracaoAtual);
-      speechSynthesis.cancel();
-      setTimeout(() => {
-        if (filaNarracao[currentIndex]) {
-          indiceNarracaoAtual = currentIndex;
-          speakFilaItem(currentIndex); // volume = 0, sem destaque
-        }
-      }, 30);
-    }
-  } else {
-    // restaurar volume
-    volumeAtual = previousVolume || 1;
-    
-      document.querySelectorAll(".opcao-label.narrando").forEach(el => {
-      el.classList.remove("narrando");
-    });
-
-    // 🚩 No próximo utterance a classe "narrando" voltará a ser adicionada normalmente
-    if (speechSynthesis.speaking) {
-      const currentIndex = Math.max(0, indiceNarracaoAtual);
-      speechSynthesis.cancel();
-      setTimeout(() => {
-        if (filaNarracao[currentIndex]) {
-          indiceNarracaoAtual = currentIndex;
-          speakFilaItem(currentIndex); // agora com som e destaque
-        }
-      }, 30);
-    }
+// Substitui a implementação anterior por esta, que delega ao speakFilaItem
+function processarFilaNarracao() {
+  if (
+    !vozAtivada ||
+    narracaoPausada ||
+    indiceNarracaoAtual >= filaNarracao.length
+  ) {
+    narracaoAtiva = false;
+    return;
   }
+  // Fala o item atual da fila
+  speakFilaItem(indiceNarracaoAtual);
+}
 
-  if (typeof atualizarBotaoVoz === "function") {
-    atualizarBotaoVoz(); // atualiza UI se existir essa função
-  }
-});
-
-// Helper: fala o item da fila no índice fornecido (centraliza a lógica)
 function speakFilaItem(index) {
   if (!filaNarracao[index]) return;
 
@@ -525,35 +454,35 @@ function speakFilaItem(index) {
   utteranceAtual = utter; // expõe globalmente para controles
 
   // Função que aplica destaque às alternativas
-function aplicarDestaqueOpcao(opcaoLabel) {
-  if (!narradorMutado && opcaoLabel) {
-    opcaoLabel.classList.add("narrando");
+  function aplicarDestaqueOpcao(opcaoLabel) {
+    if (!narradorMutado && opcaoLabel) {
+      opcaoLabel.classList.add("narrando");
+    }
   }
-}
 
-// Função que remove destaque de alternativas
-function removerDestaqueOpcao(opcaoLabel) {
-  if (opcaoLabel) {
-    opcaoLabel.classList.remove("narrando");
+  // Função que remove destaque de alternativas
+  function removerDestaqueOpcao(opcaoLabel) {
+    if (opcaoLabel) {
+      opcaoLabel.classList.remove("narrando");
+    }
   }
-}
 
-  
-  // Destacar alternativa (mesma lógica que tinha no processarFilaNarracao)
+  // Destacar alternativa
   let opcaoLabel = null;
   if (item.tipo === "opcoes") {
     const match = item.texto.match(/Alternativa ([A-Z]):/);
     if (match) {
       const letra = match[1];
-      opcaoLabel = document.querySelector(`.opcao-label[data-letra="${letra}"]`);
+      opcaoLabel = document.querySelector(
+        `.opcao-label[data-letra="${letra}"]`
+      );
       aplicarDestaqueOpcao(opcaoLabel); // aplica somente se não estiver mutado
     }
   }
 
   utter.onend = () => {
-    removerDestaqueOpcao(opcaoLabel);
+    removerDestaqueOpcao(opcaoLabel); // aplica somente se estiver mutado
     indiceNarracaoAtual++;
-    // segue o fluxo normal (processa próxima se houver)
     processarFilaNarracao();
   };
 
@@ -566,16 +495,70 @@ function removerDestaqueOpcao(opcaoLabel) {
   speechSynthesis.speak(utter);
 }
 
-// Substitui a implementação anterior por esta, que delega ao speakFilaItem
-function processarFilaNarracao() {
-  if (!vozAtivada || narracaoPausada || indiceNarracaoAtual >= filaNarracao.length) {
-    narracaoAtiva = false;
-    return;
-  }
-  // Fala o item atual da fila
-  speakFilaItem(indiceNarracaoAtual);
-}
+// Toggle mute com efeito imediato
+btnMute.addEventListener("click", () => {
+  narradorMutado = !narradorMutado;
+  
+  const btnHamb = document.querySelector(".btn-hamburger");
+  [btnHamb, btnMute].forEach((btn, i, arr) => {
+    btn.textContent = narradorMutado
+      ? (i ? "🔊 Ativar Narrador" : "🔇")
+      : (i ? "🔇 Desativar Narrador" : "🔊");
+    btn.style.background = narradorMutado ? "#fda006" : "";
+    arr[1 - i].style.animation = narradorMutado ? "none" : "";
+  });
+  
+  if (narradorMutado) {
+    // guardar volume e silenciar futuros utterances
+    
+    previousVolume = volumeAtual;
+    volumeAtual = 0;
 
+    // remove todas as classes narrando do DOM imediatamente
+    document.querySelectorAll(".opcao-label.narrando").forEach((el) => {
+      el.classList.remove("narrando");
+    });
+
+    // Se estiver falando algo agora, cancela e reinicia mudo
+    if (speechSynthesis.speaking) {
+      document.querySelectorAll(".opcao-label.narrando").forEach((el) => {
+        el.classList.remove("narrando");
+      });
+      const currentIndex = Math.max(0, indiceNarracaoAtual);
+      //speechSynthesis.cancel();
+      speechSynthesis.pause();
+      setTimeout(() => {
+        if (filaNarracao[currentIndex]) {
+          indiceNarracaoAtual = currentIndex;
+          speakFilaItem(currentIndex); // volume = 0, sem destaque
+        }
+      }, 30);
+    }
+  } else {
+    // restaurar volume
+    volumeAtual = previousVolume || 1;
+
+    document.querySelectorAll(".opcao-label.narrando").forEach((el) => {
+      el.classList.remove("narrando");
+    });
+
+    // No próximo utterance a classe "narrando" voltará a ser adicionada normalmente
+    if (speechSynthesis.speaking) {
+      const currentIndex = Math.max(0, indiceNarracaoAtual);
+      speechSynthesis.cancel();
+      setTimeout(() => {
+        if (filaNarracao[currentIndex]) {
+          indiceNarracaoAtual = currentIndex;
+          speakFilaItem(currentIndex); // agora com som e destaque
+        }
+      }, 30);
+    }
+  }
+
+  if (typeof atualizarBotaoVoz === "function") {
+    atualizarBotaoVoz(); // atualiza UI se existir essa função
+  }
+});
 
 volumeSlider.addEventListener("input", (e) => {
   e.preventDefault();
@@ -591,7 +574,7 @@ function criarUtterance(texto, voz = null) {
   utterance.lang = "pt-BR";
   utterance.rate = 0.95;
   utterance.pitch = 1.05;
-  utterance.volume = volumeAtual; // usa o valor do slider;
+  utterance.volume = volumeAtual; // usa o valor do input slider;
   if (voz) utterance.voice = voz;
 
   return utterance;
@@ -616,7 +599,8 @@ function atualizarVozAoVivo(tipo, novaVoz) {
 
   // Se tiver narração ativa, reinicia do ponto atual
   if (narracaoAtiva && filaNarracao[indiceNarracaoAtual]) {
-    speechSynthesis.cancel(); // cancela a narração atual
+    //speechSynthesis.cancel(); // cancela a narração atual
+    speechSynthesis.pause(); // pausa a narração atual
     processarFilaNarracao(); // reinicia da posição atual com a nova voz
   }
 }
@@ -630,69 +614,6 @@ function limparFilaNarracao() {
   indiceNarracaoAtual = 0;
   narracaoAtiva = false;
   speechSynthesis.cancel();
-}
-
-function processarFilaNarracao() {
-  if (
-    !vozAtivada ||
-    narracaoPausada ||
-    indiceNarracaoAtual >= filaNarracao.length
-  ) {
-    narracaoAtiva = false;
-    return;
-  }
-
-  const item = filaNarracao[indiceNarracaoAtual];
-
-  // Seleciona a voz correta
-  let vozParaUsar = vozSelecionada;
-  switch (item.tipo) {
-    case "pergunta":
-      vozParaUsar = vozPergunta;
-      break;
-    case "opcoes":
-      vozParaUsar = vozOpcoes;
-      break;
-    case "resposta":
-      vozParaUsar = vozResposta;
-      break;
-  }
-
-  const utterance = criarUtterance(item.texto, vozParaUsar);
-
-  // Destaca a alternativa se for do tipo 'opcoes'
-  let opcaoLabel = null;
-  if (item.tipo === "opcoes") {
-    // Acha o label correspondente pela letra
-    const letra = item.texto.split(":")[0].replace("Alternativa ", "").trim();
-    opcaoLabel = document.querySelector(`.opcao-label[data-letra="${letra}"]`);
-    if (opcaoLabel) opcaoLabel.classList.add("narrando");
-  }
-
-  utterance.onend = () => {
-    // Remove a borda após terminar de narrar
-    if (opcaoLabel) opcaoLabel.classList.remove("narrando");
-
-    indiceNarracaoAtual++;
-    if (indiceNarracaoAtual < filaNarracao.length && !narracaoPausada) {
-      processarFilaNarracao();
-    } else {
-      narracaoAtiva = false;
-    }
-  };
-
-  utterance.onerror = () => {
-    if (opcaoLabel) opcaoLabel.classList.remove("narrando");
-    narracaoAtiva = false;
-  };
-
-  speechSynthesis.speak(utterance);
-}
-
-function pausarNarracao() {
-  narracaoPausada = true;
-  speechSynthesis.pause();
-  atualizarIconeHamburger();
 }
 
 function retomarNarracao() {
@@ -805,30 +726,13 @@ window.addEventListener("load", () => {
   carregarVozes();
 });
 
-function falar(texto) {
-  if (!vozAtivada) return;
 
-  const utterance = criarUtterance(item.texto, vozSelecionada);
+function iniciarNarracao() {
+  if (!vozAtivada || filaNarracao.length === 0) return;
 
-  // Remove destaque anterior
-  document
-    .querySelectorAll(".opcao-label")
-    .forEach((label) => label.classList.remove("narrando"));
-
-  // Se for tipo "opcoes", destaca a alternativa sendo narrada
-  if (item.tipo === "opcoes") {
-    // Extrai a letra da alternativa do texto: "Alternativa A: Texto"
-    const match = item.texto.match(/Alternativa ([A-Z]):/);
-    if (match) {
-      const letra = match[1];
-      const label = document.querySelector(
-        `.opcao-label[data-letra="${letra}"]`
-      );
-      if (label) label.classList.add("narrando"); // adiciona classe para styles
-    }
-  }
-
-  speechSynthesis.speak(utterance);
+  narracaoAtiva = true;
+  narracaoPausada = false;
+  processarFilaNarracao();
 }
 
 function narrarPerguntaCompleta(questao, opcoes) {
@@ -850,17 +754,13 @@ function narrarPerguntaCompleta(questao, opcoes) {
   iniciarNarracao();
 }
 
-function iniciarNarracao() {
-  if (!vozAtivada || filaNarracao.length === 0) return;
-
-  narracaoAtiva = true;
-  narracaoPausada = false;
-  processarFilaNarracao();
-}
-
 function exibirQuestao() {
   const questao = perguntas[indiceQuestaoAtual];
   const opcoesEmbaralhadas = embaralharArray([...questao.opcoes]);
+  
+  
+  const btnHamb = document.querySelector(".btn-hamburger");
+  btnHamb.style.display = "block";
 
   questoesContainer.innerHTML = `
     <div class="questao">
@@ -881,14 +781,9 @@ function exibirQuestao() {
           })
           .join("")}
       </div>
-      <!-- Botão hambúrguer com ícone de som dinâmico -->
-      <button class="btn-hamburger ${
-        narracaoPausada ? "paused" : ""
-      }">
-        ${getIconeEstadoNarracao()}
-      </button>
     </div>
-    <div id="feedback-questao"></div>
+    <div id="feedback-questao">
+    </div>
   `;
 
   narrarPerguntaCompleta(questao, opcoesEmbaralhadas);
@@ -977,90 +872,6 @@ function handleResposta2(inputSelecionado2) {
 
   proximaQuestaoBtn.style.display = "block";
 }
-
-function getIconeEstadoNarracao() {
-  if (!vozAtivada) {
-    return "🔇"; // Ícone de som desativado
-  } else if (narracaoPausada) {
-    return "🔇"; // Ícone de som pausado
-  } else {
-    return "🔊"; // Ícone de som ativo
-  }
-}
-
-function atualizarBotaoVoz() {
-  const btnHamburger = document.querySelector(".btn-hamburger");
-  if (!vozAtivada) {
-    btnVoz.textContent = "🔇 Voz Desativada";
-    btnVoz.classList.add("desativado");
-    btnHamburger.classList.add("desativado");
-    btnVoz.classList.remove("ativado", "pausado");
-  } else if (narracaoPausada) {
-    btnVoz.textContent = "🔇 Voz Pausada";
-    btnVoz.classList.remove("ativado");
-    btnVoz.classList.add("pausado");
-  } else {
-    btnVoz.textContent = "🔊 Voz Ativada";
-    btnVoz.classList.add("ativado");
-    btnVoz.classList.remove("pausado", "desativado");
-    btnHamburger.classList.remove("desativado");
-  }
-
-  atualizarIconeHamburger();
-}
-
-function atualizarIconeHamburger() {
-  const btnHamburger = document.querySelector(".btn-hamburger");
-  if (btnHamburger) {
-    btnHamburger.textContent = getIconeEstadoNarracao();
-    btnHamburger.classList.toggle("paused", narracaoPausada);
-  }
-}
-
-btnVoz.addEventListener("click", () => {
-  if (narracaoPausada) {
-    // Se está pausada, retoma
-    retomarNarracao();
-  } else if (vozAtivada && (narracaoAtiva || speechSynthesis.speaking)) {
-    // Se está ativa e falando, pausa
-    pausarNarracao();
-  } else {
-    // Alterna ativação/desativação
-    vozAtivada = !vozAtivada;
-    if (!vozAtivada) {
-      limparFilaNarracao();
-    }
-  }
-
-  atualizarBotaoVoz();
-});
-
-btnVoz.addEventListener("mouseenter", () => {
-  const textoOriginal = btnVoz.textContent;
-
-  if (narracaoPausada) {
-    btnVoz.textContent = "🔊 Clique para Retomar";
-  } else if (vozAtivada && (narracaoAtiva || speechSynthesis.speaking)) {
-    btnVoz.textContent = "⏸️ Clique para Pausar";
-  } else if (vozAtivada) {
-    btnVoz.textContent = "🔇 Clique para Desativar";
-  } else {
-    btnVoz.textContent = "🔊 Clique para Ativar";
-  }
-
-  btnVoz.dataset.textoOriginal = textoOriginal;
-});
-
-/*
-btnVoz.addEventListener("mouseleave", () => {
-  if (btnVoz.dataset.textoOriginal) {
-    btnVoz.textContent = btnVoz.dataset.textoOriginal;
-    delete btnVoz.dataset.textoOriginal;
-  } else {
-    atualizarBotaoVoz();
-  }
-});
-*/
 
 window.addEventListener("beforeunload", () => {
   // Salva o índice atual da narração e se estava pausada
