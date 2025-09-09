@@ -348,7 +348,7 @@ document.body.insertAdjacentHTML(
   `
   <div id="sidebar" class="sidebar">
     <div class="sidebar-header">
-      <h3>Configurações de Voz</h3>
+      <h3>Configurações</h3>
       <button id="sidebar-close" class="btn-fechar">&times;</button>
     </div>
     <div class="sidebar-content">
