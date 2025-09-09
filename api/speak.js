@@ -34,6 +34,7 @@ estilo.textContent = `
   --box-shadow-narrando: 0 4px 15px var(--cor-narrando);
   --box-shadow-focus: 0 0 0 2px rgba(0, 123, 255, 0.25);
   --box-shadow-sidebar: -2px 0 10px rgba(0, 0, 0, 0.1);
+  --box-shadow-label: 0 4px 10px rgba(0, 0, 0, 0.2);
 
   /* Bordas */
   --border-padrao: 1px solid #ced4da;
@@ -249,10 +250,17 @@ button {
 }
 
 /* Alternativa narrando */
+.opcao-label.narrando.correta,
+.opcao-label.narrando.incorreta {
+    box-shadow: var(--box-shadow-label) !important;
+    font-weight: normal;
+    transform: translateY(0);
+}
+
 .opcao-label.narrando {
   border: 2px solid var(--cor-narrando-hover);
   background-color: var(--cor-narrando);
-  /*box-shadow: var(--box-shadow-narrando);*/
+  box-shadow: var(--box-shadow-narrando) !important;
   border-radius: 5px;
   padding: 5px;
   font-weight: bold;
@@ -262,6 +270,21 @@ button {
 .opcao-label.narrando:hover {
   background-color: var(--cor-narrando-hover);
   border: 2px solid var(--cor-narrando);
+}
+
+.opcao-label.narrando.correta:hover,
+.opcao-label.narrando.incorreta:hover {
+  transform: translateY(-3px) !important;
+}
+
+.opcao-label.narrando.correta:hover {
+  background-color: #273f2f;
+  border-color: #3a8652f5;
+}
+
+.opcao-label.narrando.incorreta:hover {
+  background-color: #5e2c2c;
+  border-color: #ad4646ec;
 }
 
 .opcao-label.narrando span {
@@ -311,7 +334,7 @@ button {
     font-size: 22px;
   }
   
-  .btn-voz {
+  #btnMute {
     padding: 15px 20px;
     font-size: 18px;
   }
