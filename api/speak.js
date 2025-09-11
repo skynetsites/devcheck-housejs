@@ -348,7 +348,7 @@ document.body.insertAdjacentHTML(
   `
   <div id="sidebar" class="sidebar">
     <div class="sidebar-header">
-      <h3>Configurações</h3>
+      <h3>Configurações de Voz</h3>
       <button id="sidebar-close" class="btn-fechar">&times;</button>
     </div>
     <div class="sidebar-content">
@@ -428,6 +428,15 @@ let indiceNarracaoAtual = 0;
 let previousVolume = volumeAtual;
 
 let narracaoAtivaNasPerguntas = false;
+
+let tentativasCarregamento = 0;
+let maxTentativas = 20;
+let intervaloVerificacao = null;
+let vozesCarregadas = false;
+let interacaoUsuario = false;
+
+document.addEventListener('click', () => { interacaoUsuario = true; }, { once: true });
+document.addEventListener('touchstart', () => { interacaoUsuario = true; }, { once: true });
 
 // ================== FUNÇÕES ==================
 
@@ -656,9 +665,22 @@ function retomarNarracao() {
   }
 }
 
+// Detecta interação do usuário (necessário para alguns navegadores móveis)
+function detectarInteracaoUsuario() {
+  if (!interacaoUsuario) {
+    interacaoUsuario = true
+    console.log("🎤 Interação do usuário detectada, tentando carregar vozes...")
+    carregarVozes()
+  }
+}
+// Adiciona listeners para detectar interação
+;["click", "touchstart", "keydown"].forEach((event) => {
+  document.addEventListener(event, detectarInteracaoUsuario, { once: true, passive: true })
+})
+
 function simplificarNome(vozNome) {
   // Remove "Microsoft " inicial
-  let nome = vozNome.replace("Microsoft ", "").trim();
+  let nome = vozNome.replace(/Microsoft|Google|Apple|Samsung/gi, "").trim()
 
   // Encontra primeiro índice de "-" ou "Online" ou "("
   const indices = [
@@ -675,8 +697,31 @@ function simplificarNome(vozNome) {
 }
 
 function carregarVozes() {
+  tentativasCarregamento++;
+  
+  if (!interacaoUsuario && (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('Android'))) {
+    console.log('Aguardando interação do usuário para carregar vozes...');
+    return;
+  }
+
   vozesDisponiveis = speechSynthesis.getVoices().filter(v => v.lang.startsWith("pt-BR"));
-  if (!vozesDisponiveis.length) return;
+  
+  if (!vozesDisponiveis.length) {
+    console.log(`Tentativa ${tentativasCarregamento}: Nenhuma voz encontrada`);
+    
+    if (tentativasCarregamento < maxTentativas) {
+      setTimeout(carregarVozes, 200 + (tentativasCarregamento * 100));
+    }
+    return;
+  }
+
+  vozesCarregadas = true;
+  console.log(`Vozes carregadas com sucesso na tentativa ${tentativasCarregamento}`);
+  
+  if (intervaloVerificacao) {
+    clearInterval(intervaloVerificacao);
+    intervaloVerificacao = null;
+  }
 
   // Recupera vozes salvas do sessionStorage
   const vozPrincipalSalva = sessionStorage.getItem("vozPrincipal");
@@ -725,19 +770,60 @@ function carregarVozes() {
   }
 }
 
-// Chamar depois de carregar o DOM
-speechSynthesis.onvoiceschanged = carregarVozes;
-window.addEventListener("load", carregarVozes);
+function inicializarCarregamentoVozes() {
+  // 1) Tenta carregar imediatamente
+  carregarVozes();
 
-// 1) Tenta carregar imediatamente
-carregarVozes();
+  // 2) Configura o evento onvoiceschanged
+  speechSynthesis.onvoiceschanged = carregarVozes;
 
-// 2) Recarrega quando o navegador disparar o evento (Android/Chrome)
-speechSynthesis.onvoiceschanged = carregarVozes;
+  // 3) Polling inteligente para navegadores móveis problemáticos
+  intervaloVerificacao = setInterval(() => {
+    if (!vozesCarregadas && tentativasCarregamento < maxTentativas) {
+      carregarVozes();
+    } else if (vozesCarregadas || tentativasCarregamento >= maxTentativas) {
+      clearInterval(intervaloVerificacao);
+      intervaloVerificacao = null;
+    }
+  }, 300);
 
-// 3) Fallback: tenta mais algumas vezes caso o evento não venha
-[100, 500, 1000].forEach((ms) => {
-  setTimeout(carregarVozes, ms);
+  // 4) Fallbacks adicionais com delays progressivos
+  [100, 500, 1000, 2000, 3000].forEach((ms, index) => {
+    setTimeout(() => {
+      if (!vozesCarregadas) {
+        console.log(`Fallback ${index + 1}: Tentando carregar vozes após ${ms}ms`);
+        carregarVozes();
+      }
+    }, ms);
+  });
+
+  // 5) Tenta novamente quando a página fica visível (para apps em background)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && !vozesCarregadas) {
+      console.log('Página ficou visível, tentando carregar vozes...');
+      setTimeout(carregarVozes, 100);
+    }
+  });
+
+  // 6) Tenta quando a janela recebe foco
+  window.addEventListener('focus', () => {
+    if (!vozesCarregadas) {
+      console.log('Janela recebeu foco, tentando carregar vozes...');
+      setTimeout(carregarVozes, 100);
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', inicializarCarregamentoVozes);
+} else {
+  inicializarCarregamentoVozes();
+}
+
+window.addEventListener("load", () => {
+  if (!vozesCarregadas) {
+    setTimeout(carregarVozes, 100);
+  }
 });
 
 // ==================== FUNÇÃO FALAR ====================
